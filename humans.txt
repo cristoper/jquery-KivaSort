@@ -9,4 +9,3 @@ Developer: American Cynic (http://americancynic.net)
 
 * HTML5 Boilerplate: http://html5boilerplate.com/
 * Dynatable: http://www.dynatable.com
-* Kiva Javascript API: https://github.com/kiva/kiva-objects.js
