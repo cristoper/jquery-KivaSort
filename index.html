@@ -14,6 +14,7 @@
 
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="js/vendor/jquery-dynatable/jquery.dynatable.css">
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
     </head>
     <body>
@@ -25,22 +26,41 @@
         <h1>Kiva Sort</h1>
         <div id='kiva_sort'></div>
 
-
+        <table id="kiva-sort-table">
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Portfolio Yield</th>
+                <th>Profitability</th>
+                <th>Status</th>
+                <th>Start Date</th>
+                <th>Rating</th>
+                <th>Due Diligence Type</th>
+                <th>Country</th>
+                <th>Delinquency Rate</th>
+                <th>Default Rate</th>
+                <th>Total Amount Raised</th>
+                <th>Loans Posted</th>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
         <script src="js/kiva_sort.js"></script>
+        <script src="js/vendor/jquery-dynatable/jquery.dynatable.js"></script>
         <script src="js/main.js"></script>
 
         <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
         <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-29080257-2','mretc.net');ga('send','pageview');
+(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+                                                        function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+ e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+ e.src='//www.google-analytics.com/analytics.js';
+ r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+ga('create','UA-29080257-2','mretc.net');ga('send','pageview');
         </script>
-    </body>
-</html>
+        </body>
+        </html>
