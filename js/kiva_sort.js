@@ -90,7 +90,12 @@
             var tagAttr = {};
             if (record[column]) {
                 for (var attr in objAttr) {
-                    tagAttr[attr] = record[objAttr[attr]];
+                    var value = objAttr[attr];
+                    tagAttr[attr] = record[value];
+                    if (value == 'url' && !record.url) {
+                        // Don't make a link if there is no URL
+                        delete tagAttr[attr];
+                    }
                 }
                 var HTML = $(tagStr, tagAttr);
                 return HTML[0].outerHTML;
