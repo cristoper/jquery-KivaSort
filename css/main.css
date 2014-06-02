@@ -97,7 +97,10 @@ textarea {
    Author's custom styles
    ========================================================================== */
 
-
+.kiva_sort {
+    max-width: 1500;
+    margin: 0 auto;
+}
 
 
 
