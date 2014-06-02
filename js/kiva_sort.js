@@ -112,7 +112,7 @@
     // The jQuery function
     $.fn.makeKivaTable = function(opts) {
         var $el = this;
-        initSortKiva();
+        initSortKiva(opts);
         return this.each(function() {
             SortKiva.fetchedJSON.done(function () {
                 // Apply Dynatable to our table element
@@ -123,7 +123,7 @@
         });
     };
 
-    function initSortKiva() {
+    function initSortKiva(opts) {
         if (initSortKiva.didInit === undefined) {
             // Only run if we haven't yet been initialized
             initSortKiva.didInit = true;
