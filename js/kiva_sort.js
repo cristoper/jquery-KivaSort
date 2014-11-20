@@ -104,6 +104,15 @@
         };
     }
 
+    // Get list of column names (thead) for the given jquery table element
+    // returns an array of strings
+    function columnNames(table) {
+        return table.find('th').map(function () { 
+            var title = $.trim($(this).text())
+            return title.replace(/\s/g, '_').toLowerCase()
+        }).get()
+    }
+
     // Namespace for plugin state
     var SortKiva = {};
 
@@ -121,8 +130,11 @@
         return this.each(function() {
             SortKiva.fetchedJSON.done(function () {
                 // Apply Dynatable to our table element
-                $el.dynatable({
-                    dataset: { records: SortKiva.fetchedJSON.data.partners }
+                $el.DataTable({
+                    data: SortKiva.fetchedJSON.data.partners,
+                    columns: $.map(columnNames($el), function(name) {
+                        return { data: name }
+                    })
                 });
             });
         });
@@ -141,7 +153,6 @@
             /* Setup default dynatable configuration
             */
             $.extend(true, defaults, opts);
-            $.dynatableSetup(defaults);
         }
     }
 
