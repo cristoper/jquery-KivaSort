@@ -114,24 +114,25 @@
     }
 
     // Namespace for plugin state
-    var SortKiva = {};
+    var KivaSort = {};
 
     // Static property to store state of JSON fetching
     // TODO: handle failure of JSON fetch
-    SortKiva.fetchedJSON = new $.Deferred();
+    KivaSort.fetchedJSON = new $.Deferred();
 
     // Object to store json
-    SortKiva.fetchedJSON.data = {};
+    KivaSort.fetchedJSON.data = {};
 
     // The jQuery function
     $.fn.makeKivaTable = function(opts) {
         var $el = this;
-        initSortKiva(opts);
+        initKivaSort(opts);
+
         return this.each(function() {
-            SortKiva.fetchedJSON.done(function () {
+            KivaSort.fetchedJSON.done(function () {
                 // Apply Dynatable to our table element
                 $el.DataTable({
-                    data: SortKiva.fetchedJSON.data.partners,
+                    data: KivaSort.fetchedJSON.data.partners,
                     columns: $.map(columnNames($el), function(name) {
                         return { data: name }
                     })
@@ -140,10 +141,10 @@
         });
     };
 
-    function initSortKiva(opts) {
-        if (initSortKiva.didInit === undefined) {
+    function initKivaSort(opts) {
+        if (initKivaSort.didInit === undefined) {
             // Only run if we haven't yet been initialized
-            initSortKiva.didInit = true;
+            initKivaSort.didInit = true;
 
             /* Get json from Kiva API and then once we have it (and have processed
              * it), call dynatable on our element.
@@ -164,15 +165,15 @@
     }
 
     function gotKivaPage(data) {
-        $.extend(SortKiva.fetchedJSON.data, data);
+        $.extend(KivaSort.fetchedJSON.data, data);
         var curPage = data.paging.page;
         if (data.paging.pages > curPage) {
             // There are more pages of field partners JSON to retrieve
             fetchKivaPartners(curPage + 1);
-        } else if (SortKiva.fetchedJSON.data) {
+        } else if (KivaSort.fetchedJSON.data) {
             // We got all of the pages
-            preProcessJSON(SortKiva.fetchedJSON.data);
-            SortKiva.fetchedJSON.resolve();
+            preProcessJSON(KivaSort.fetchedJSON.data);
+            KivaSort.fetchedJSON.resolve();
         }
     }
 
