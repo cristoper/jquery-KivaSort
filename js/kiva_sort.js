@@ -2,6 +2,8 @@
 // TODO: fixed headers
 // TODO: resizable columns
 // TODO: ajax error handling
+// TODO: load static/cached Kiva data
+
 /** Kiva Sort: Jquery plugin for retrieving and displaying list of Kiva
  * field partners which may be sorted and filtered.
  **/
