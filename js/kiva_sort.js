@@ -27,14 +27,7 @@
             perPageDefault: 500,
             perPageOptions: [20,50,100,500]
         },
-        writers: $.extend(percentWriters(percentColumns), linkWriters(linkColumns), {
-            'id': function (record) {
-                var idLink = $('<a></a>', {
-                    text: record.id,
-                    href: partnersURL + record.id
-                });
-                return idLink[0].outerHTML;
-            },
+        writers: $.extend(linkWriters(linkColumns), {
             'loans_posted': function (record) {
                 if (record.loans_posted === undefined) {
                     return naText;
@@ -61,22 +54,32 @@
         })
     };
 
-    // meta!
-    function percentWriters(percentColumns) {
-        var writers = {};
-        percentColumns.forEach(function(column) {
-            writers[column] = makeWriter(column, undefinedValue, naText);
-        });
-        return writers;
+    function getData(row, type, set, meta) {
+        var colName = KivaSort.columns[meta.col];
+        var field = row[colName];
 
-        function makeWriter (column, undefinedValue, naText) {
-            return function (record) {
-                if (record[column] == undefinedValue) { return naText; }
-                return record[column].toFixed(2) + '%';
-            };
+        if (type == "sort" || type == "type") {
+            // For sorting and type detection, return the raw JSON data
+            return field;
         }
+
+        // For display and filtering, format things nicely
+        switch (colName) {
+            case "id":
+                return $('<a></a>', {
+                    text: field,
+                    href: partnersURL + field
+                })[0].outerHTML;
+                break;
+        }
+        if ($.inArray(colName, percentColumns) != -1) {
+            if (field == undefinedValue) { return naText; }
+            return field.toFixed(2) + '%';
+        }
+        return field;
     }
 
+    // meta!
     function linkWriters(linkColumns) {
         var writers = {};
         linkColumns.forEach(function(column) {
@@ -130,14 +133,19 @@
         var $el = this;
         initKivaSort(opts);
 
+        /* Get the column names from the bare-bones HTML table provided by the
+         *  user */
+        KivaSort.columns = columnNames($el)
+
         return this.each(function() {
             KivaSort.fetchedJSON.done(function () {
-                // Apply Dynatable to our table element
+                // Apply DataTables to our table element
                 $el.DataTable({
                     data: KivaSort.fetchedJSON.data.partners,
-                    columns: $.map(columnNames($el), function(name) {
-                        return { data: name }
-                    })
+                    columnDefs: [{
+                        targets: "_all",
+                        data: getData
+                    }]
                 });
             });
         });
@@ -153,7 +161,7 @@
              */
             fetchKivaPartners(1);
 
-            /* Setup default dynatable configuration
+            /* Setup default configuration
             */
             $.extend(true, defaults, opts);
         }
@@ -179,10 +187,8 @@
         }
     }
 
-    /* Do some in-place sanitizing of JSON object.
-     * This makes it more suitable for passing use with dynatable This is
-     * instead of using dynatable's readers (since we are providing the json)
-     */
+    /* Do some in-place preprocessing of fetched JSON
+    */
     function preProcessJSON(data) {
         data.partners.forEach(function (partner) {
             /* If a numeric column is undefined, sort it as
