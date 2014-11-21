@@ -28,12 +28,6 @@
             perPageOptions: [20,50,100,500]
         },
         writers: $.extend(linkWriters(linkColumns), {
-            'loans_posted': function (record) {
-                if (record.loans_posted === undefined) {
-                    return naText;
-                }
-                return record.loans_posted.toLocaleString();
-            },
             'start_date': function (record) {
                 if (record.start_date) {
                     var date = new Date(record.start_date);
@@ -64,18 +58,33 @@
         }
 
         // For display and filtering, format things nicely
-        switch (colName) {
-            case "id":
-                return $('<a></a>', {
-                    text: field,
-                    href: partnersURL + field
-                })[0].outerHTML;
-                break;
+ 
+        // Catch all the 'undefined' fields
+        if (field === undefined || field == undefinedValue) {
+            return naText;
         }
+
+        // Handle specific columns
+        switch (colName) {
+            case 'id':
+                return $('<a></a>', {
+                text: field,
+                href: partnersURL + field
+            })[0].outerHTML;
+            break;
+            case 'loans_posted': 
+                return field.toLocaleString();
+            break;
+        }
+
+        // Handle other column types
         if ($.inArray(colName, percentColumns) != -1) {
             if (field == undefinedValue) { return naText; }
             return field.toFixed(2) + '%';
         }
+
+        /* Catch-all (including plain text and numeric columns): pass through
+         * raw string */
         return field;
     }
 
@@ -157,8 +166,8 @@
             initKivaSort.didInit = true;
 
             /* Get json from Kiva API and then once we have it (and have processed
-             * it), call dynatable on our element.
-             */
+            * it), call dynatable on our element.
+            */
             fetchKivaPartners(1);
 
             /* Setup default configuration
