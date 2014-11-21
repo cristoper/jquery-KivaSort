@@ -20,14 +20,6 @@
     var linkColumns = ['name', 'url'];
 
     var defaults = {
-        table: {
-            defaultColumnIdStyle: 'underscore'
-        },
-        dataset: {
-            perPageDefault: 500,
-            perPageOptions: [20,50,100,500]
-        },
-        writers: $.extend(linkWriters(linkColumns), { })
     };
 
     function getData(row, type, set, meta) {
@@ -75,8 +67,9 @@
 
         // Handle other column types
         if ($.inArray(colName, percentColumns) != -1) {
-            if (field == undefinedValue) { return naText; }
             return field.toFixed(2) + '%';
+        } else if ($.inArray(colName, linkColumns) != -1) {
+            return writeLink(row, colName);
         }
 
         /* Catch-all (including plain text and numeric columns): pass through
@@ -84,34 +77,17 @@
         return field;
     }
 
-    // meta!
-    function linkWriters(linkColumns) {
-        var writers = {};
-        linkColumns.forEach(function(column) {
-            var linkAttr = { text: column, href: 'url' };
-            writers[column] = makeHTMLWriter(column, undefinedValue, naText, '<a></a>', linkAttr);
-        });
-        return writers;
-    }
-
-    function makeHTMLWriter(column, undefinedValue, naText, tagStr, objAttr) {
-        return function (record) {
-            // build tag attributes to pass to jQuery()
-            var tagAttr = {};
-            if (record[column]) {
-                for (var attr in objAttr) {
-                    var value = objAttr[attr];
-                    tagAttr[attr] = record[value];
-                    if (value == 'url' && !record.url) {
-                        // Don't make a link if there is no URL
-                        delete tagAttr[attr];
-                    }
-                }
-                var HTML = $(tagStr, tagAttr);
-                return HTML[0].outerHTML;
+    function writeLink(record, column) {
+        // build tag attributes to pass to jQuery()
+        if (record[column]) {
+            var tagAttr = { text: record[column] }
+            if (record.url) {
+                tagAttr.href = record.url;
             }
-            return naText;
-        };
+            var HTML = $('<a></a>', tagAttr);
+            return HTML[0].outerHTML;
+        }
+        return naText;
     }
 
     // Get list of column names (thead) for the given jquery table element
@@ -139,7 +115,7 @@
         initKivaSort(opts);
 
         /* Get the column names from the bare-bones HTML table provided by the
-         *  user */
+        *  user */
         KivaSort.columns = columnNames($el)
 
         return this.each(function() {
@@ -202,19 +178,19 @@
                 if(!$.isNumeric(partner[column])) {
                     partner[column] = undefinedValue;
                 }
-                });
+            });
 
             // Partners with no yield_portfolio defined
             if (!partner.charges_fees_and_interest) {
-            partner.portfolio_yield = 0;
+                partner.portfolio_yield = 0;
             }
 
             // Make sure text columns don't include any undefined
             textColumns.forEach(function (column) {
                 if(!partner[column]) {
-                partner[column] = '';
+                    partner[column] = '';
                 }
-                });
+            });
 
             // Get country if available
             // If more than one country for an MFI, use the first one
