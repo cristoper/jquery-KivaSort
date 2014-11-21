@@ -138,7 +138,7 @@
             initKivaSort.didInit = true;
 
             /* Get json from Kiva API and then once we have it (and have processed
-             * it), call dynatable on our element.
+             * it) call DataTables on our table element.
              */
             fetchKivaPartners(1);
 
