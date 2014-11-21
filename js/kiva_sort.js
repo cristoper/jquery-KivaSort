@@ -27,18 +27,7 @@
             perPageDefault: 500,
             perPageOptions: [20,50,100,500]
         },
-        writers: $.extend(linkWriters(linkColumns), {
-            'start_date': function (record) {
-                if (record.start_date) {
-                    var date = new Date(record.start_date);
-                    var dateHTML = $('<time></time>', {
-                        datetime: record.start_date,
-                        text: date.toLocaleDateString()
-                    });
-                    return dateHTML[0].outerHTML;
-                }
-                return naText;
-            },
+        writers: $.extend(linkWriters(linkColumns), { 
             'total_amount_raised': function (record) {
                 if (record.total_amount_raised === undefined) {
                     return naText;
@@ -74,6 +63,17 @@
             break;
             case 'loans_posted': 
                 return field.toLocaleString();
+            break;
+            case 'start_date':
+                if (field) {
+                var date = new Date(field);
+                var dateHTML = $('<time></time>', {
+                    datetime: field,
+                    text: date.toLocaleDateString()
+                });
+                return dateHTML[0].outerHTML;
+            }
+            return naText;
             break;
         }
 
@@ -166,8 +166,8 @@
             initKivaSort.didInit = true;
 
             /* Get json from Kiva API and then once we have it (and have processed
-            * it), call dynatable on our element.
-            */
+             * it), call dynatable on our element.
+             */
             fetchKivaPartners(1);
 
             /* Setup default configuration
