@@ -27,14 +27,7 @@
             perPageDefault: 500,
             perPageOptions: [20,50,100,500]
         },
-        writers: $.extend(linkWriters(linkColumns), { 
-            'total_amount_raised': function (record) {
-                if (record.total_amount_raised === undefined) {
-                    return naText;
-                }
-                return '$' + record.total_amount_raised.toLocaleString();
-            },
-        })
+        writers: $.extend(linkWriters(linkColumns), { })
     };
 
     function getData(row, type, set, meta) {
@@ -59,7 +52,7 @@
                 return $('<a></a>', {
                 text: field,
                 href: partnersURL + field
-            })[0].outerHTML;
+                })[0].outerHTML;
             break;
             case 'loans_posted': 
                 return field.toLocaleString();
@@ -72,8 +65,11 @@
                     text: date.toLocaleDateString()
                 });
                 return dateHTML[0].outerHTML;
-            }
-            return naText;
+                }
+                return naText;
+            break;
+            case 'total_amount_raised':
+                return '$' + field.toLocaleString();
             break;
         }
 
@@ -206,19 +202,19 @@
                 if(!$.isNumeric(partner[column])) {
                     partner[column] = undefinedValue;
                 }
-            }); 
+                });
 
             // Partners with no yield_portfolio defined
             if (!partner.charges_fees_and_interest) {
-                partner.portfolio_yield = 0;
+            partner.portfolio_yield = 0;
             }
 
             // Make sure text columns don't include any undefined
             textColumns.forEach(function (column) {
                 if(!partner[column]) {
-                    partner[column] = '';
+                partner[column] = '';
                 }
-            });
+                });
 
             // Get country if available
             // If more than one country for an MFI, use the first one
