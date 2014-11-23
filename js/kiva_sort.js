@@ -20,6 +20,10 @@
     var linkColumns = ['name', 'url'];
 
     var defaults = {
+        columnDefs: [{
+            targets: "_all",
+            data: getData
+        }]
     };
 
     function getData(row, type, set, meta) {
@@ -32,7 +36,7 @@
         }
 
         // For display and filtering, format things nicely
- 
+
         // Catch all the 'undefined' fields
         if (field === undefined || field == undefinedValue) {
             return naText;
@@ -44,7 +48,7 @@
                 return $('<a></a>', {
                 text: field,
                 href: partnersURL + field
-                })[0].outerHTML;
+            })[0].outerHTML;
             break;
             case 'loans_posted': 
                 return field.toLocaleString();
@@ -57,8 +61,8 @@
                     text: date.toLocaleDateString()
                 });
                 return dateHTML[0].outerHTML;
-                }
-                return naText;
+            }
+            return naText;
             break;
             case 'total_amount_raised':
                 return '$' + field.toLocaleString();
@@ -115,19 +119,14 @@
         initKivaSort(opts);
 
         /* Get the column names from the bare-bones HTML table provided by the
-        *  user */
+         *  user */
         KivaSort.columns = columnNames($el)
 
         return this.each(function() {
             KivaSort.fetchedJSON.done(function () {
                 // Apply DataTables to our table element
-                $el.DataTable({
-                    data: KivaSort.fetchedJSON.data.partners,
-                    columnDefs: [{
-                        targets: "_all",
-                        data: getData
-                    }]
-                });
+                $.extend(defaults, { data: KivaSort.fetchedJSON.data.partners });
+                $el.DataTable(defaults);
             });
         });
     };
