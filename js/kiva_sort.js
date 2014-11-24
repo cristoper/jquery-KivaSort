@@ -121,29 +121,32 @@
         KivaSort.columns = columnNames($el)
 
         return this.each(function() {
-            KivaSort.fetchedJSON.done(function () {
-                // Apply DataTables to our table element
-                $el.DataTable({
-                    data: KivaSort.fetchedJSON.data.partners,
-                    columnDefs: [{
-                        targets: "_all",
-                        data: getData
-                    }]
-                });
+            // Apply DataTables to our table element
+            $el.DataTable({
+                ajax: fetchData,
+                columnDefs: [{
+                    targets: "_all",
+                    data: getData
+                }]
             });
         });
     };
 
+    function fetchData(data, callback, settings) {
+        if (KivaSort.didAJAX === undefined) {
+            // We only fetch the JSON once, and keep a single copy for all tables
+            KivaSort.didAJAX = true;
 
-            /* Get json from Kiva API and then once we have it (and have processed
-             * it) call DataTables on our table element.
-             */
+            // Get json from Kiva API and then once we have it (and have
+            // pre-processed it)
             fetchKivaPartners(1);
-
-            /* Setup default configuration
-            */
-            $.extend(true, defaults, opts);
         }
+
+        // This is called when the AJAX call succeeds to let DataTables know we
+        // have the data
+        KivaSort.fetchedJSON.done(function () {
+            callback(KivaSort.fetchedJSON);
+        });
     }
 
     function fetchKivaPartners(pageNum) {
@@ -162,6 +165,8 @@
         } else if (KivaSort.fetchedJSON.data) {
             // We got all of the pages
             preProcessJSON(KivaSort.fetchedJSON.data);
+            // DataTables expects the data to be in the "data" property
+            KivaSort.fetchedJSON.data = KivaSort.fetchedJSON.data.partners;
             KivaSort.fetchedJSON.resolve();
         }
     }
