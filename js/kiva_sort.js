@@ -20,6 +20,11 @@
     var linkColumns = ['name', 'url'];
 
     var defaults = {
+        ajax: fetchData,
+        columnDefs: [{
+            targets: "_all",
+            data: getData
+        }]
     };
 
     function getData(row, type, set, meta) {
@@ -32,7 +37,7 @@
         }
 
         // For display and filtering, format things nicely
- 
+
         // Catch all the 'undefined' fields
         if (field === undefined || field == undefinedValue) {
             return naText;
@@ -44,7 +49,7 @@
                 return $('<a></a>', {
                 text: field,
                 href: partnersURL + field
-                })[0].outerHTML;
+            })[0].outerHTML;
             break;
             case 'loans_posted': 
                 return field.toLocaleString();
@@ -57,8 +62,8 @@
                     text: date.toLocaleDateString()
                 });
                 return dateHTML[0].outerHTML;
-                }
-                return naText;
+            }
+            return naText;
             break;
             case 'total_amount_raised':
                 return '$' + field.toLocaleString();
@@ -122,13 +127,7 @@
 
         return this.each(function() {
             // Apply DataTables to our table element
-            $el.DataTable({
-                ajax: fetchData,
-                columnDefs: [{
-                    targets: "_all",
-                    data: getData
-                }]
-            });
+            $el.DataTable(defaults);
         });
     };
 
@@ -179,25 +178,25 @@
              * undefinedValue */
             numericColumns.forEach(function (column) {
                 if(!$.isNumeric(partner[column])) {
-                    partner[column] = undefinedValue;
-                }
-            });
-
-            // Partners with no yield_portfolio defined
-            if (!partner.charges_fees_and_interest) {
-                partner.portfolio_yield = 0;
+                partner[column] = undefinedValue;
             }
-
-            // Make sure text columns don't include any undefined
-            textColumns.forEach(function (column) {
-                if(!partner[column]) {
-                    partner[column] = '';
-                }
-            });
-
-            // Get country if available
-            // If more than one country for an MFI, use the first one
-            partner.country = partner.countries[0].name || partner.countries[0].iso_code;
         });
+
+        // Partners with no yield_portfolio defined
+        if (!partner.charges_fees_and_interest) {
+            partner.portfolio_yield = 0;
+        }
+
+        // Make sure text columns don't include any undefined
+        textColumns.forEach(function (column) {
+            if(!partner[column]) {
+                partner[column] = '';
+            }
+        });
+
+        // Get country if available
+        // If more than one country for an MFI, use the first one
+        partner.country = partner.countries[0].name || partner.countries[0].iso_code;
+    });
     }
 }(jQuery, document, window));
