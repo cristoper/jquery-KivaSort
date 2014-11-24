@@ -1,4 +1,3 @@
-// TODO: 'loading...' widget
 // TODO: fixed headers
 // TODO: resizable columns
 // TODO: ajax error handling
