@@ -1,6 +1,6 @@
 // TODO: fixed headers
 // TODO: resizable columns
-// TODO: ajax error handling
+// TODO: retry on ajax error
 // TODO: test with multiple tables
 // TODO: load static/cached Kiva data
 
@@ -116,18 +116,18 @@
 
     // The jQuery function
     $.fn.makeKivaTable = function(opts) {
-        var $el = this;
+        KivaSort.$table = this;
 
         // merge the user-provided options for DataTables with our defaults
         $.extend(true, defaults, opts);
 
         /* Get the column names from the bare-bones HTML table provided by the
          * user */
-        KivaSort.columns = columnNames($el);
+        KivaSort.columns = columnNames(KivaSort.$table);
 
         return this.each(function() {
             // Apply DataTables to our table element
-            $el.DataTable(defaults);
+            KivaSort.$table.DataTable(defaults);
         });
     };
 
@@ -152,7 +152,15 @@
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
         // TODO: add appid
-        $.getJSON(apiURL, {'page': pageNum}).done(gotKivaPage);
+        $.getJSON(apiURL, {'page': pageNum})
+          .done(gotKivaPage)
+          .fail(jsonFailed);
+    }
+
+    function jsonFailed() {
+            KivaSort.fetchedJSON.data = [];
+            KivaSort.fetchedJSON.resolve();
+            KivaSort.$table.find('td.dataTables_empty').first().html("<span class='error'>Error fetching field partner data from Kiva.org.</span>");
     }
 
     function gotKivaPage(data) {
