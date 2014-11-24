@@ -84,7 +84,7 @@
     function writeLink(record, column) {
         // build tag attributes to pass to jQuery()
         if (record[column]) {
-            var tagAttr = { text: record[column] }
+            var tagAttr = { text: record[column] };
             if (record.url) {
                 tagAttr.href = record.url;
             }
@@ -98,9 +98,9 @@
     // returns an array of strings
     function columnNames(table) {
         return table.find('th').map(function () { 
-            var title = $.trim($(this).text())
-            return title.replace(/\s/g, '_').toLowerCase()
-        }).get()
+            var title = $.trim($(this).text());
+            return title.replace(/\s/g, '_').toLowerCase();
+        }).get();
     }
 
     // Namespace for plugin state
@@ -122,7 +122,7 @@
 
         /* Get the column names from the bare-bones HTML table provided by the
          * user */
-        KivaSort.columns = columnNames($el)
+        KivaSort.columns = columnNames($el);
 
         return this.each(function() {
             // Apply DataTables to our table element
