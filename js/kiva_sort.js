@@ -112,10 +112,12 @@
     // The jQuery function
     $.fn.makeKivaTable = function(opts) {
         var $el = this;
-        initKivaSort(opts);
+
+        // merge the user-provided options for DataTables with our defaults
+        $.extend(true, defaults, opts);
 
         /* Get the column names from the bare-bones HTML table provided by the
-        *  user */
+         * user */
         KivaSort.columns = columnNames($el)
 
         return this.each(function() {
@@ -132,10 +134,6 @@
         });
     };
 
-    function initKivaSort(opts) {
-        if (initKivaSort.didInit === undefined) {
-            // Only run if we haven't yet been initialized
-            initKivaSort.didInit = true;
 
             /* Get json from Kiva API and then once we have it (and have processed
              * it) call DataTables on our table element.
