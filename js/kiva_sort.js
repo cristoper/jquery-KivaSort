@@ -1,9 +1,12 @@
-// TODO: load static/cached Kiva data
-// TODO: docs
-
-/** Kiva Sort: Jquery plugin for retrieving and displaying list of Kiva
- * field partners which may be sorted and filtered.
- **/
+/**
+ * @file KivaSort is a JQuery plugin which makes it easy to include a sortable
+ * table of Kiva.org's field partners in an HTML document. All the heavy
+ * lifting is done by the DataTables plugin (http://datatables.net/).
+ * @author Chris Burkhardt <chris@mretc.net> 
+ *
+ * TODO: load static/cached Kiva data
+ *
+ */
 ;(function ($, document, window) {
     "use strict";
 
@@ -16,6 +19,7 @@
     var textColumns = ['due_diligence_type', 'name', 'rating', 'status', 'url'];
     var linkColumns = ['name', 'url'];
 
+    // The DataTables defaults
     var defaults = {
         ajax: fetchData,
         columnDefs: [{
@@ -24,6 +28,12 @@
         }]
     };
 
+    /** The function DataTables calls when it needs data for a cell. This
+     * allows us to format some data nicely for display and filtering (links,
+     * percentages, etc) while leaving the raw data for sorting.
+     *
+     * @see http://datatables.net/reference/option/columns.data
+     */
     function getData(row, type, set, meta) {
         var colName = meta.settings.nTable.columns[meta.col];
         var field = row[colName];
@@ -79,6 +89,14 @@
         return field;
     }
 
+    /** A helper function for outputting HTML links
+     *
+     * @param record The record (row) containing the text and URL
+     * @param {string} column The column from which the link text should be
+     *   taken (ex: "name")
+     *
+     * @returns {string} HTML for link
+     */
     function writeLink(record, column) {
         // build tag attributes to pass to jQuery()
         if (record[column]) {
@@ -92,8 +110,14 @@
         return naText;
     }
 
-    // Get list of column names (thead) for the given jquery table element
-    // returns an array of strings
+    /** Get list of column names (thead) for the given JQuery table element
+     *
+     * @param table A JQuery object (not a plain DOM object) containing the
+     *   <table> element from which to collect column names
+     *
+     * @returns {Array} An array of strings; each element is a column name, in
+     *   order
+     */
     function columnNames(table) {
         return table.find('th').map(function () { 
             var title = $.trim($(this).text());
@@ -101,21 +125,40 @@
         }).get();
     }
 
-    // Namespace for global plugin state
+
+    /** Namespace for global plugin state */
     var KivaSort = {};
 
-    /* KivaSort.tables is a global array of each table element (not jquery
+    /** KivaSort.tables is a global array of each table element (not jquery
      * object) the plugin is applied to */
     KivaSort.tables = [];
 
-    // Static property to store state of JSON fetching
+    /** Static property to store state of JSON fetching */
     KivaSort.fetchedJSON = new $.Deferred();
 
-    // Object to store json
+    /** Object to store json */
     KivaSort.fetchedJSON.data = {};
 
-    // The jQuery function to apply KivaSort to table elements
-    // TODO: filter out non-table elements
+    /******** Main Plugin Functions ********/
+
+    /** The jQuery function to apply KivaSort to table elements. This is
+     * KivaSort's main function and should be called from within the
+     * $(document).ready() callback. For example (assuming the target table
+     * has its id attribute set to 'KivaSort'):
+     *
+     * $(document).ready(function () {
+     *   $('#KivaSort').makeKivaTable();
+     * });
+     *
+     * TODO: filter out non-table elements
+     *
+     * @param {Object} opts An object containing options which will be passed
+     *   to the DataTables instance applied to the target table(s) (see
+     *   http://datatables.net/reference/option/)
+     *
+     * @returns A JQuery object wrapping each of the table elements so that
+     *   further JQuery functions may be chained after .makeKivaTable()
+     */
     $.fn.makeKivaTable = function(opts) {
 
         // Add to the global list of tables
@@ -124,7 +167,7 @@
         return this.each(function(index, table) {
             var $table = $(table);
 
-            /* merge the user-provided options for DataTables with our defaults */
+            // merge the user-provided options for DataTables with our defaults
             $.extend(true, table.opts, defaults, opts);
 
             /* Get the column names from the bare-bones HTML table provided by the
@@ -136,8 +179,13 @@
         });
     };
 
-    // JQuery function to remove KivaSort from table elements
-    $.fn.removeKivaTable = function(opts) {
+    /** JQuery function to remove KivaSort from target table elements
+     *
+     * This essentially is the reverse of .makeKivaTable(). It removes the
+     * target table(s) from KivaSort.tables array, clears the data, then
+     * destroys the table's associated DataTables instance.
+     */
+    $.fn.removeKivaTable = function() {
         return this.each(function(index, table) {
             // remove from KivaSort.tables
             KivaSort.tables = $.grep(KivaSort.tables, function(t) {
@@ -148,7 +196,11 @@
         });
     }
 
-    // Re-fetch the JSON data from the server
+    /** Re-fetch the JSON data from the server
+     *
+     * This is useful, for example, if an AJAX error occurs during the first
+     * attempt.
+     */
     KivaSort.refreshJSON = function() {
         delete KivaSort.didAJAX;
         $.each(KivaSort.tables, function(index, table) {
@@ -156,6 +208,12 @@
         });
     }
 
+    /******** AJAX Functions ********/
+
+    /** This is the function DataTables calls to get its data.
+     *
+     * @see http://datatables.net/reference/option/ajax
+     */
     function fetchData(data, callback, settings) {
         if (KivaSort.didAJAX === undefined) {
             // We only fetch the JSON once, and keep a single copy for all tables
@@ -173,6 +231,7 @@
         });
     }
 
+    /** Initiate the AJAX call */
     function fetchKivaPartners(pageNum) {
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
@@ -182,6 +241,7 @@
         .fail(jsonFailed);
     }
 
+    /** This is called when the AJAX request fails */
     function jsonFailed() {
         KivaSort.fetchedJSON.data = [];
         KivaSort.fetchedJSON.resolve();
@@ -198,6 +258,9 @@
         });
     }
 
+    /** This is called on each page of data retrieved from the Kiva API. It
+    * then initiates the fetch of the next page until we have all of the data
+    * */
     function gotKivaPage(data) {
         $.extend(KivaSort.fetchedJSON.data, data);
         var curPage = data.paging.page;
@@ -213,7 +276,7 @@
         }
     }
 
-    /* Do some in-place preprocessing of fetched JSON
+    /** Do some in-place preprocessing of fetched JSON
     */
     function preProcessJSON(data) {
         data.partners.forEach(function (partner) {
