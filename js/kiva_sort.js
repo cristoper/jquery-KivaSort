@@ -160,7 +160,7 @@
      *
      *   The two KivaSort options which may be passed are:
      *   
-     *     * 'ks_appID' - the appID to pass along with all requests to the Kiva
+     *     * 'ks_appID' - the app_id to pass along with all requests to the Kiva
      *     API (should be reverse-DNS string). See:
      *     http://build.kiva.org/docs/linking_to_kiva/app_id
      *
@@ -174,6 +174,9 @@
      *   further JQuery functions may be chained after .makeKivaTable()
      */
     $.fn.makeKivaTable = function(opts) {
+
+        // Get global app_id, if it was passed in opts
+        KivaSort.app_id = opts.ks_appID;
 
         // Add to the global list of tables
         $.merge(KivaSort.tables, this);
@@ -258,8 +261,7 @@
     function fetchKivaPartners(pageNum) {
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
-        // TODO: add appid
-        $.getJSON(apiURL, {'page': pageNum})
+        $.getJSON(apiURL, {'page': pageNum, 'app_id': KivaSort.app_id})
         .done(gotKivaPage)
         .fail(jsonFailed);
     }
