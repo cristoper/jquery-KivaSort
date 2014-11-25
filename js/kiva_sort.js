@@ -152,9 +152,22 @@
      *
      * TODO: filter out non-table elements
      *
-     * @param {Object} opts An object containing options which will be passed
-     *   to the DataTables instance applied to the target table(s) (see
+     * @param {Object} opts An object containing the KivaSort configuration
+     *   options. There are only two options specific to KivaSort, the rest will
+     *   be passed to the DataTables instance applied to the target table(s) (see
      *   http://datatables.net/reference/option/)
+     *
+     *   The two KivaSort options which may be passed are:
+     *   
+     *     * 'ks_appID' - the appID to pass along with all requests to the Kiva
+     *     API (should be reverse-DNS string). See:
+     *     http://build.kiva.org/docs/linking_to_kiva/app_id
+     *
+     *     * 'ks_partnerData' - An object containing JSON data just like what
+     *     the Kiva API returns. When this option is present, KivaSort will not
+     *     make any API calls, and will instead use the given data as if it
+     *     came from Kiva.org. This is useful, for example, for using cached
+     *     data instead of calling the Kiva servers every time.
      *
      * @returns A JQuery object wrapping each of the table elements so that
      *   further JQuery functions may be chained after .makeKivaTable()
