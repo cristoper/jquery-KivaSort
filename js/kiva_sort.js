@@ -1,6 +1,5 @@
 // TODO: fixed headers
 // TODO: resizable columns
-// TODO: retry on ajax error
 // TODO: load static/cached Kiva data
 
 /** Kiva Sort: Jquery plugin for retrieving and displaying list of Kiva
@@ -151,6 +150,14 @@
         });
     }
 
+    // Re-fetch the JSON data from the server
+    KivaSort.refreshJSON = function() {
+        delete KivaSort.didAJAX;
+        $.each(KivaSort.tables, function(index, table) {
+            $(table).DataTable().ajax.reload();
+        });
+    }
+
     function fetchData(data, callback, settings) {
         if (KivaSort.didAJAX === undefined) {
             // We only fetch the JSON once, and keep a single copy for all tables
@@ -173,16 +180,24 @@
 
         // TODO: add appid
         $.getJSON(apiURL, {'page': pageNum})
-          .done(gotKivaPage)
-          .fail(jsonFailed);
+        .done(gotKivaPage)
+        .fail(jsonFailed);
     }
 
     function jsonFailed() {
-            KivaSort.fetchedJSON.data = [];
-            KivaSort.fetchedJSON.resolve();
-            $.each(KivaSort.tables, function(index, table) {
-                $(table).find('td.dataTables_empty').first().html("<span class='error'>Error fetching field partner data from Kiva.org.</span>");
-    });
+        KivaSort.fetchedJSON.data = [];
+        KivaSort.fetchedJSON.resolve();
+        $.each(KivaSort.tables, function(index, table) {
+            var err_row = $(table).find('td.dataTables_empty').first();
+            err_row.html("<span class='error'>Error fetching field partner data from Kiva.org.</span>");
+
+            var link = $.parseHTML("<a href='#' title='Click to retry fetching data from Kiva'>Try again</a>")
+            $(link).click(function(e) {
+                KivaSort.refreshJSON();
+                return false;
+            });
+            err_row.append(link);
+        });
     }
 
     function gotKivaPage(data) {
@@ -208,25 +223,25 @@
              * undefinedValue */
             numericColumns.forEach(function (column) {
                 if(!$.isNumeric(partner[column])) {
-                partner[column] = undefinedValue;
+                    partner[column] = undefinedValue;
+                }
+            });
+
+            // Partners with no yield_portfolio defined
+            if (!partner.charges_fees_and_interest) {
+                partner.portfolio_yield = 0;
             }
+
+            // Make sure text columns don't include any undefined
+            textColumns.forEach(function (column) {
+                if(!partner[column]) {
+                    partner[column] = '';
+                }
+            });
+
+            // Get country if available
+            // If more than one country for an MFI, use the first one
+            partner.country = partner.countries[0].name || partner.countries[0].iso_code;
         });
-
-        // Partners with no yield_portfolio defined
-        if (!partner.charges_fees_and_interest) {
-            partner.portfolio_yield = 0;
-        }
-
-        // Make sure text columns don't include any undefined
-        textColumns.forEach(function (column) {
-            if(!partner[column]) {
-                partner[column] = '';
-            }
-        });
-
-        // Get country if available
-        // If more than one country for an MFI, use the first one
-        partner.country = partner.countries[0].name || partner.countries[0].iso_code;
-    });
     }
 }(jQuery, document, window));
