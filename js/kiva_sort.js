@@ -1,4 +1,5 @@
 // TODO: load static/cached Kiva data
+// TODO: docs
 
 /** Kiva Sort: Jquery plugin for retrieving and displaying list of Kiva
  * field partners which may be sorted and filtered.
@@ -108,7 +109,6 @@
     KivaSort.tables = [];
 
     // Static property to store state of JSON fetching
-    // TODO: handle failure of JSON fetch
     KivaSort.fetchedJSON = new $.Deferred();
 
     // Object to store json
