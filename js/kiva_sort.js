@@ -121,7 +121,7 @@
      */
     function columnNames(table) {
         return table.find('th').map(function () { 
-            var title = $.trim($(this).text());
+            var title = $(this).data('title') || $.trim($(this).text());
             return title.replace(/\s/g, '_').toLowerCase();
         }).get();
     }
