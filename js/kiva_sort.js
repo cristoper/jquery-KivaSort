@@ -1,5 +1,3 @@
-// TODO: fixed headers
-// TODO: resizable columns
 // TODO: load static/cached Kiva data
 
 /** Kiva Sort: Jquery plugin for retrieving and displaying list of Kiva
