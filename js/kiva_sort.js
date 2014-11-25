@@ -174,6 +174,7 @@
      *   further JQuery functions may be chained after .makeKivaTable()
      */
     $.fn.makeKivaTable = function(opts) {
+        var opts = opts || {};
 
         // Get global app_id, if it was passed in opts
         KivaSort.app_id = opts.ks_appID;
