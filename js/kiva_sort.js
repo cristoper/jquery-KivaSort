@@ -182,7 +182,7 @@
         // Add to the global list of tables
         $.merge(KivaSort.tables, this);
 
-        return this.each(function(index, table) {
+        return this.filter('table').each(function(index, table) {
             var $table = $(table);
 
             // merge the user-provided options for DataTables with our defaults
