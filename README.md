@@ -85,7 +85,9 @@ Once KivaSort is applied to the above data using the following JavaScript, the p
 
 ```javascript
 <script type="text/javascript" charset="utf8">
+$(document).ready(function () {
     $('.KivaSort').makeKivaTable();
+});
 </script>
 ```
 
