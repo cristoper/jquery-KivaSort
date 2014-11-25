@@ -81,7 +81,7 @@ The following columns are available:
 * Total Amount Raised
 * URL
 
-Once KivaSort is applied to the above data using the following JavaScript, the plugin will fetch the field partner data from the Kiva API and populate the table with sortable column headings:
+Once KivaSort is applied to the above table using the following JavaScript, the plugin will fetch the field partner data from the Kiva API and populate the table with sortable column headings:
 
 ```javascript
 <script type="text/javascript" charset="utf8">
