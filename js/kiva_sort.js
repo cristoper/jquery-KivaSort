@@ -193,7 +193,7 @@
             table.columns = columnNames($(table));
 
             // Apply DataTables to our table element
-            $(table).DataTable(defaults);
+            $(table).DataTable(table.opts);
         });
     };
 
