@@ -139,6 +139,18 @@
         });
     };
 
+    // JQuery function to remove KivaSort from table elements
+    $.fn.removeKivaTable = function(opts) {
+        return this.each(function(index, table) {
+            // remove from KivaSort.tables
+            KivaSort.tables = $.grep(KivaSort.tables, function(t) {
+                return t != table;
+            });
+
+            $(table).DataTable().clear().destroy();
+        });
+    }
+
     function fetchData(data, callback, settings) {
         if (KivaSort.didAJAX === undefined) {
             // We only fetch the JSON once, and keep a single copy for all tables
