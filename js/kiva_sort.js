@@ -4,8 +4,6 @@
  * lifting is done by the DataTables plugin (http://datatables.net/).
  * @author Chris Burkhardt <chris@mretc.net> 
  *
- * TODO: load static/cached Kiva data
- *
  */
 ;(function ($, document, window) {
     "use strict";
@@ -18,6 +16,9 @@
     var percentColumns = [ 'average_loan_size_percent_per_capita_income', 'currency_exchange_loss_rate', 'default_rate', 'delinquency_rate', 'loans_at_risk_rate', 'portfolio_yield', 'profitability'];
     var textColumns = ['due_diligence_type', 'name', 'rating', 'status', 'url'];
     var linkColumns = ['name', 'url'];
+
+
+    /******** DataTables Setup ********/
 
     // The DataTables defaults
     var defaults = {
@@ -126,6 +127,8 @@
     }
 
 
+    /******** Main Plugin Functions ********/
+
     /** Namespace for global plugin state */
     var KivaSort = {};
 
@@ -138,8 +141,6 @@
 
     /** Object to store json */
     KivaSort.fetchedJSON.data = {};
-
-    /******** Main Plugin Functions ********/
 
     /** The jQuery function to apply KivaSort to table elements. This is
      * KivaSort's main function and should be called from within the
@@ -181,6 +182,7 @@
             var $table = $(table);
 
             // merge the user-provided options for DataTables with our defaults
+            table.opts = {};
             $.extend(true, table.opts, defaults, opts);
 
             /* Get the column names from the bare-bones HTML table provided by the
@@ -228,7 +230,15 @@
      * @see http://datatables.net/reference/option/ajax
      */
     function fetchData(data, callback, settings) {
-        if (KivaSort.didAJAX === undefined) {
+        var table = settings.nTable;
+
+        if (table.opts.ks_partnerData) {
+            /* We were given data directly for this table, no need to make API
+             * call */
+            preProcessJSON(table.opts.ks_partnerData);
+            KivaSort.fetchedJSON.data = table.opts.ks_partnerData.partners;
+            callback(KivaSort.fetchedJSON);
+        } else if (KivaSort.didAJAX === undefined) {
             // We only fetch the JSON once, and keep a single copy for all tables
             KivaSort.didAJAX = true;
 
@@ -272,8 +282,8 @@
     }
 
     /** This is called on each page of data retrieved from the Kiva API. It
-    * then initiates the fetch of the next page until we have all of the data
-    * */
+     * then initiates the fetch of the next page until we have all of the data
+     * */
     function gotKivaPage(data) {
         $.extend(KivaSort.fetchedJSON.data, data);
         var curPage = data.paging.page;
