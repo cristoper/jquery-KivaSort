@@ -61,7 +61,27 @@ Below is an example template which will display a table with the five specified 
 </table>
 ```
 
-Once KivaSort is applied to the above data, the plugin will fetch the field partner data from the Kiva API and populate the table with sortable column headings:
+The following columns are available:
+
+* Average Loan Size Percent Per Capita Income
+* Country
+* Currency Exchange Loss Rate
+* Default Rate
+* Delinquency Rate
+* Due Diligence Type
+* ID
+* Loans At Risk Rate
+* Loans Posted
+* Name
+* Portfolio Yield
+* Profitability
+* Rating
+* Start Date
+* Status
+* Total Amount Raised
+* URL
+
+Once KivaSort is applied to the above data using the following JavaScript, the plugin will fetch the field partner data from the Kiva API and populate the table with sortable column headings:
 
 ```javascript
 <script type="text/javascript" charset="utf8">
