@@ -1,3 +1,3 @@
 $(document).ready(function () {
-    $('#KivaSort').makeKivaTable();
+    $('.KivaSort').makeKivaTable();
 });

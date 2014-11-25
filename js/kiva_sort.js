@@ -1,7 +1,6 @@
 // TODO: fixed headers
 // TODO: resizable columns
 // TODO: retry on ajax error
-// TODO: test with multiple tables
 // TODO: load static/cached Kiva data
 
 /** Kiva Sort: Jquery plugin for retrieving and displaying list of Kiva
@@ -28,7 +27,7 @@
     };
 
     function getData(row, type, set, meta) {
-        var colName = KivaSort.columns[meta.col];
+        var colName = meta.settings.nTable.columns[meta.col];
         var field = row[colName];
 
         if (type == "sort" || type == "type") {
@@ -104,8 +103,12 @@
         }).get();
     }
 
-    // Namespace for plugin state
+    // Namespace for global plugin state
     var KivaSort = {};
+
+    /* KivaSort.tables is a global array of each table element (not jquery
+     * object) the plugin is applied to */
+    KivaSort.tables = [];
 
     // Static property to store state of JSON fetching
     // TODO: handle failure of JSON fetch
@@ -114,20 +117,25 @@
     // Object to store json
     KivaSort.fetchedJSON.data = {};
 
-    // The jQuery function
+    // The jQuery function to apply KivaSort to table elements
+    // TODO: filter out non-table elements
     $.fn.makeKivaTable = function(opts) {
-        KivaSort.$table = this;
 
-        // merge the user-provided options for DataTables with our defaults
-        $.extend(true, defaults, opts);
+        // Add to the global list of tables
+        $.merge(KivaSort.tables, this);
 
-        /* Get the column names from the bare-bones HTML table provided by the
-         * user */
-        KivaSort.columns = columnNames(KivaSort.$table);
+        return this.each(function(index, table) {
+            var $table = $(table);
 
-        return this.each(function() {
+            /* merge the user-provided options for DataTables with our defaults */
+            $.extend(true, table.opts, defaults, opts);
+
+            /* Get the column names from the bare-bones HTML table provided by the
+             * user */
+            table.columns = columnNames($(table));
+
             // Apply DataTables to our table element
-            KivaSort.$table.DataTable(defaults);
+            $(table).DataTable(defaults);
         });
     };
 
@@ -160,7 +168,9 @@
     function jsonFailed() {
             KivaSort.fetchedJSON.data = [];
             KivaSort.fetchedJSON.resolve();
-            KivaSort.$table.find('td.dataTables_empty').first().html("<span class='error'>Error fetching field partner data from Kiva.org.</span>");
+            $.each(KivaSort.tables, function(index, table) {
+                $(table).find('td.dataTables_empty').first().html("<span class='error'>Error fetching field partner data from Kiva.org.</span>");
+    });
     }
 
     function gotKivaPage(data) {
