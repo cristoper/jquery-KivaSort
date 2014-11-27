@@ -43,8 +43,6 @@ Applying KivaSort to a table requires two simple steps:
 
 ### Basic Table
 
-#### HTML Table Template
-
 Below is an example template which will display a table with the five specified columns:
 
 ```html
@@ -121,7 +119,7 @@ For example, this table would be populated with the same data as the first examp
 </table>
 ```
 
-## Options
+### Options
 
 The `makeKivaSort()` function may be passed an option object. Most options are passed on to the DataTables instance, but KivaSort accepts two options of its own:
 
@@ -137,7 +135,7 @@ $(document).ready(function () {
 });
 ```
 
-### DataTables Options
+#### DataTables Options
 
 To pass any of the DataTables configuration options, simply pass them in the options object to `makeKivaTable`. The following example passes the `pageLength`, `scrollX`, and `order` DataTables options to change the table behavior. The last line uses the DataTables API to filter out any rows which contain "-" (which is the character KivaSort uses when no data is available for a column).
 
@@ -158,7 +156,7 @@ $(document).ready(function () {
 });
 ```
 
-## Remove KivaSort
+### Remove KivaSort
 
 A KivaSort instance may be removed from a table using the `removeKivaTable()` function.  This essentially is the reverse of .makeKivaTable(). It removes the target table(s) from KivaSort.tables array, clears the data, then destroys the table's associated DataTables instance:
 
