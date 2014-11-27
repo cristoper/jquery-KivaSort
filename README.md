@@ -41,7 +41,9 @@ Applying KivaSort to a table requires two simple steps:
 
 2. Apply KivaSort to the table using its `.makeKivaTable()` function
 
-### HTML Table Template
+### Basic Table
+
+#### HTML Table Template
 
 Below is an example template which will display a table with the five specified columns:
 
@@ -61,7 +63,23 @@ Below is an example template which will display a table with the five specified 
 </table>
 ```
 
-The following columns are available:
+See the next section for a complete list of available column names.
+
+Once KivaSort is applied to the above table using the following JavaScript, the plugin will fetch the field partner data from the Kiva API and populate the table with sortable column headings:
+
+```javascript
+<script type="text/javascript" charset="utf8">
+$(document).ready(function () {
+    $('#KivaSort').makeKivaTable();
+});
+</script>
+```
+
+That's it!
+
+### Column Names and Arbitrary Column Names
+
+The following columns are available for use in your template table:
 
 * Average Loan Size Percent Per Capita Income
 * Country
@@ -81,7 +99,27 @@ The following columns are available:
 * Total Amount Raised
 * URL
 
-Once KivaSort is applied to the above table using the following JavaScript, the plugin will fetch the field partner data from the Kiva API and populate the table with sortable column headings:
+Column names are case insensitive, and spaces may be replaced with underscores (so `Loans Posted`, `loans posted` and `loans_posted` will all be populated with the same data when `makeKivaTable()` is applied to the table element).
+
+Arbitrary column names are possible by adding a `data-title` attribute to the `<th>` element containing one of the valid column names (as listed above), and the human-readable contents of the `<th>` tag may be anything.
+
+For example, this table would be populated with the same data as the first example but with two arbitrary column names:
+
+```html
+<table id="KivaSort">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th data-title='name'>Field Partner</th>
+            <th data-title='portfolio_yield'>Portfolio Yield (interest)</th>
+            <th>Profitability</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+```
 
 ```javascript
 <script type="text/javascript" charset="utf8">
