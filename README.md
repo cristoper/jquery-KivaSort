@@ -121,12 +121,23 @@ For example, this table would be populated with the same data as the first examp
 </table>
 ```
 
+## Options
+
+The `makeKivaSort()` function may be passed an option object. Most options are passed on to the DataTables instance, but KivaSort accepts two options of its own:
+
+* 'ks_appID' - the app_id to pass along with all requests to the Kiva API (should be reverse-DNS string). See: http://build.kiva.org/docs/linking_to_kiva/app_id
+
+* 'ks_partnerData' - An object containing JSON data just like what the Kiva API returns. When this option is present, KivaSort will not make any API calls, and will instead use the given data as if it came from Kiva.org. This is useful, for example, for using cached data instead of calling the Kiva servers every time.
+
+For example, to include your app_id with all API calls to Kiva, invoke `makeKivaSort()` like this:
+
 ```javascript
-<script type="text/javascript" charset="utf8">
 $(document).ready(function () {
-    $('.KivaSort').makeKivaTable();
+    $('#KivaSort').makeKivaTable({ks_appID: 'tld.your.appid'});
 });
-</script>
+``
+
+});
 ```
 
 That's it!
