@@ -93,6 +93,10 @@ $(document).ready(function () {
 
 That's it!
 
+## License
+
+KivaSort is licensed under the term of the [WTFPL](http://www.wtfpl.net/about/), version 2. See [LICENSE.txt](LICENSE.txt) as included with this project. Note that the libraries in the `js/vendor/` directory are included in the KivaSort repository as a convenience, but they are distributed under their own respective licenses.
+
 ## Contributing
 
 1. Fork it!
