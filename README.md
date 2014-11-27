@@ -158,7 +158,13 @@ $(document).ready(function () {
 });
 ```
 
-That's it!
+## Remove KivaSort
+
+A KivaSort instance may be removed from a table using the `removeKivaTable()` function.  This essentially is the reverse of .makeKivaTable(). It removes the target table(s) from KivaSort.tables array, clears the data, then destroys the table's associated DataTables instance:
+
+```javascript
+$('#KivaSort').removeKivaTable();
+```
 
 ## License
 
