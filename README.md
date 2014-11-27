@@ -137,7 +137,7 @@ $(document).ready(function () {
 
 #### DataTables Options
 
-To pass any of the DataTables configuration options, simply pass them in the options object to `makeKivaTable`. The following example passes the `pageLength`, `scrollX`, and `order` DataTables options to change the table behavior. The last line uses the DataTables API to filter out any rows which contain "-" (which is the character KivaSort uses when no data is available for a column).
+To pass any of the DataTables configuration options, simply pass them in the options object to `makeKivaTable()`. The following example passes the `pageLength`, `scrollX`, and `order` DataTables options to change the table behavior. The last line uses the DataTables API to filter out any rows which contain "-" (which is the character KivaSort uses when no data is available for a column).
 
 
 ```javascript
