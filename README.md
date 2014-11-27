@@ -135,7 +135,7 @@ For example, to include your app_id with all API calls to Kiva, invoke `makeKiva
 $(document).ready(function () {
     $('#KivaSort').makeKivaTable({ks_appID: 'tld.your.appid'});
 });
-``
+```
 
 ### DataTables Options
 
