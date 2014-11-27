@@ -180,8 +180,12 @@ KivaSort is licensed under the term of the [WTFPL](http://www.wtfpl.net/about/),
 
 ## Contributing
 
+Any contributions are welcome of course! Feel free to use the [project issues tracker](https://github.com/cristoper/jquery-KivaSort/issues) to let me know of any bugs, typos, or feature requests.
+
+If you'd like to contribute code (or documentation) you can either open an issue and attach a patch, or if you use Github:
+
 1. Fork it!
 2. Create your feature branch: `git checkout -b my-new-feature`
 3. Commit your changes: `git commit -am 'Add some feature'`
 4. Push to the branch: `git push origin my-new-feature`
-5. Submit a pull request :D
+5. Submit a pull request
