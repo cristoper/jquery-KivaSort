@@ -137,6 +137,24 @@ $(document).ready(function () {
 });
 ``
 
+### DataTables Options
+
+To pass any of the DataTables configuration options, simply pass them in the options object to `makeKivaTable`. The following example passes the `pageLength`, `scrollX`, and `order` DataTables options to change the table behavior. The last line uses the DataTables API to filter out any rows which contain "-" (which is the character KivaSort uses when no data is available for a column).
+
+
+```javascript
+$(document).ready(function () {
+    var table = $('#KivaSort');
+    table.makeKivaTable({
+        pageLength: 5, // Only 5 rows per page
+        scrollX: true, // allow horizontal scrollbar
+
+       /* Sort by Portfolio Yield, and then Profitability */
+       order: [[2, "desc"], [3, "desc"]]
+    });
+
+    /* Filter out rows with no portfolio yield or profitability data */
+    table.DataTable().columns('th').search('^(?!-$)', true, false);
 });
 ```
 
