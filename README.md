@@ -6,6 +6,16 @@ KivaSort makes it easy to add several such tables to a single HTML document (eac
 
 DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, and the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table.
 
+* [Installation](#installation)
+* [Usage](#usage)
+    * [Basic Table](#basic-table)
+    * [Column Names and Arbitrary Column Names](#column-names-and-arbitrary-column-names)
+    * [Options](#options)
+        * [DataTables Options](#datatables-options)
+    * [Remove KivaSort](#remove-kivasort)
+* [License](#license)
+* [Contributing](#contributing)
+
 ## Installation
 
 The KivaSort plugin is contained in a single JavaScript file, [kiva_sort.js](https://raw.githubusercontent.com/cristoper/jquery-KivaSort/master/js/kiva_sort.js). You can find the latest stable version in the master branch of [its github repository](https://github.com/cristoper/jquery-KivaSort)
