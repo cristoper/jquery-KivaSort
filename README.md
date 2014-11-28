@@ -39,7 +39,7 @@ So your HTML page should have lines similar to these:
   <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
   <!-- KivaSort JavaScript (locally hosted) -->
-  <script type="text/javascript" charset="utf8" src="js/kiva_sort.js"></script>
+  <script type="text/javascript" charset="utf8" src="path/to/kiva_sort.js"></script>
 </head>
 ```
 
