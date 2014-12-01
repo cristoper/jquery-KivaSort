@@ -110,7 +110,6 @@ The following columns are available for use in your template table:
 * Currency Exchange Loss Rate
 * Default Rate
 * Delinquency Rate
-* Due Diligence Type
 * ID
 * Loans At Risk Rate
 * Loans Posted
