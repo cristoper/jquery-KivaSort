@@ -2,7 +2,7 @@
   "name": "jquery-kivasort",
   "main": "kiva_sort.js",
   "dependencies": {
-    "datatables": "~1.10.0",
+    "datatables": "~1.10.0"
   },
   "version": "1.0.0",
   "homepage": "https://github.com/cristoper/jquery-KivaSort",
