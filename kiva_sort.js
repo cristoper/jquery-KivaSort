@@ -151,8 +151,6 @@
      *   $('#KivaSort').makeKivaTable();
      * });
      *
-     * TODO: filter out non-table elements
-     *
      * @param {Object} opts An object containing the KivaSort configuration
      *   options. There are only two options specific to KivaSort, the rest will
      *   be passed to the DataTables instance applied to the target table(s) (see
