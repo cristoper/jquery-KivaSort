@@ -184,6 +184,12 @@
             var $table = $(table);
 
             // merge the user-provided options for DataTables with our defaults
+            var optsColumnDefs = opts.columnDefs;
+            if (optsColumnDefs == undefined) {optsColumnDefs = []; }
+            // first merge arrays into defaults and remove from opts
+            $.merge(defaults.columnDefs, optsColumnDefs);
+            delete opts.columnDefs;
+            // then extend objects
             table.opts = {};
             $.extend(true, table.opts, defaults, opts);
 
