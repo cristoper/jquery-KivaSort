@@ -8,6 +8,7 @@ KivaSort makes it easy to add several such tables to a single HTML document (eac
 
 DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, and the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table.
 
+* [KivaSort in the Wild](#kivasort-in-the-wild)
 * [Installation](#installation)
 * [Usage](#usage)
     * [Basic Table](#basic-table)
@@ -17,6 +18,10 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
     * [Remove KivaSort](#remove-kivasort)
 * [License](#license)
 * [Contributing](#contributing)
+
+## KivaSort in the Wild
+
+* [KivaSort.org](http://www.kivasort.org/)
 
 ## Installation
 
