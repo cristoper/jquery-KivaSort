@@ -5,7 +5,7 @@
  * @author Chris Burkhardt <chris@mretc.net> 
  *
  */
-;(function ($, document, window) {
+;(function ($, document, window, exports) {
     "use strict";
 
     var partnersURL = 'http://www.kiva.org/partners/';    
@@ -17,6 +17,12 @@
     var textColumns = ['due_diligence_type', 'name', 'rating', 'status', 'url'];
     var linkColumns = ['name', 'url'];
 
+    /** dummy object so we don't have to require datatables
+     * from node.js
+     */
+    if (typeof exports !== 'undefined') {
+        $.fn= {dataTable: {ext: {buttons: {}}}};
+    }
 
     /******** DataTables Setup ********/
 
@@ -129,7 +135,7 @@
     /******** Custom DataTables buttons  ********/
 
     /** A simple button to show the raw JSON data
-     */
+    */
     $.fn.dataTable.ext.buttons.json = {
         className: 'buttons-json buttons-html5',
         available: function () {
@@ -142,8 +148,8 @@
             var json = JSON.stringify({ partners: output });
             var blob = new Blob([json],
                                 {type : 'application/json'});
-            var url = URL.createObjectURL(blob);
-            window.open(url);
+                                var url = URL.createObjectURL(blob);
+                                window.open(url);
         }
     };
 
@@ -277,7 +283,7 @@
 
         // This is called when the AJAX call succeeds to let DataTables know we
         // have the data
-        KivaSort.fetchedJSON.done(function () {
+        KivaSort.fetchedJSON.always(function () {
             callback(KivaSort.fetchedJSON);
         });
     }
@@ -289,12 +295,18 @@
         $.getJSON(apiURL, {'page': pageNum, 'app_id': KivaSort.app_id})
         .done(gotKivaPage)
         .fail(jsonFailed);
+
+        return KivaSort.fetchedJSON;
     }
 
     /** This is called when the AJAX request fails */
     function jsonFailed() {
         KivaSort.fetchedJSON.data = [];
-        KivaSort.fetchedJSON.resolve();
+        KivaSort.fetchedJSON.reject();
+        if (typeof exports === 'undefined') {
+            // We were called from a non-browser environment (like node.js)
+            console.log('Error fetching JSON');
+        }
         $.each(KivaSort.tables, function(index, table) {
             var err_row = $(table).find('td.dataTables_empty').first();
             err_row.html("<span class='error'>Error fetching field partner data from Kiva.org.</span>");
@@ -316,13 +328,13 @@
         var curPage = data.paging.page;
         if (data.paging.pages > curPage) {
             // There are more pages of field partners JSON to retrieve
-            fetchKivaPartners(curPage + 1);
+            KivaSort.fetchKivaPartners(curPage + 1);
         } else if (KivaSort.fetchedJSON.data) {
             // We got all of the pages
             preProcessJSON(KivaSort.fetchedJSON.data);
             // DataTables expects the data to be in the "data" property
             KivaSort.fetchedJSON.data = KivaSort.fetchedJSON.data.partners;
-            KivaSort.fetchedJSON.resolve();
+            KivaSort.fetchedJSON.resolve(KivaSort.fetchedJSON.data);
         }
     }
 
@@ -355,4 +367,12 @@
             partner.country = partner.countries[0].name || partner.countries[0].iso_code;
         });
     }
-}(jQuery, document, window));
+
+    /** Export functions for use from non-browser environments (Like node.js) */
+    if (typeof exports !== 'undefined') {
+        exports.fetchKivaPartners = fetchKivaPartners;
+
+        // dummy object so we don't have to require datatables
+        $.fn= {dataTable: {ext: {buttons: {}}}};
+    }
+}(jQuery, document, window, typeof exports === 'undefined' ? undefined : exports));
