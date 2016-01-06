@@ -281,14 +281,17 @@
             fetchKivaPartners(1);
         }
 
-        // This is called when the AJAX call succeeds to let DataTables know we
-        // have the data
-        KivaSort.fetchedJSON.always(function () {
-            callback(KivaSort.fetchedJSON);
+        /** This is called when the AJAX call succeeds to let DataTables know
+         * we have the data (datatables expect the data to be in the 'data'
+         * property of the argument */
+        KivaSort.fetchedJSON.always(function(json) {
+            callback({data: json});
         });
     }
 
-    /** Initiate the AJAX call */
+    /** Initiate the AJAX call 
+    *  @returns A jquery promise. Calling done() on the promise will return the
+    *  data when it is available*/
     function fetchKivaPartners(pageNum) {
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
@@ -332,9 +335,7 @@
         } else if (KivaSort.fetchedJSON.data) {
             // We got all of the pages
             preProcessJSON(KivaSort.fetchedJSON.data);
-            // DataTables expects the data to be in the "data" property
-            KivaSort.fetchedJSON.data = KivaSort.fetchedJSON.data.partners;
-            KivaSort.fetchedJSON.resolve(KivaSort.fetchedJSON.data);
+            KivaSort.fetchedJSON.resolve(KivaSort.fetchedJSON.data.partners);
         }
     }
 
