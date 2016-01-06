@@ -303,12 +303,12 @@
     }
 
     /** This is called when the AJAX request fails */
-    function jsonFailed() {
+    function jsonFailed(jqXHR, textStatus, errorThrown) {
         KivaSort.fetchedJSON.data = [];
         KivaSort.fetchedJSON.reject();
         if (typeof exports === 'undefined') {
             // We were called from a non-browser environment (like node.js)
-            console.log('Error fetching JSON');
+            console.log('Error fetching JSON: ' + textStatus);
         }
         $.each(KivaSort.tables, function(index, table) {
             var err_row = $(table).find('td.dataTables_empty').first();
