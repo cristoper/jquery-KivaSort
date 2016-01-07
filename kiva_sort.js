@@ -372,8 +372,5 @@
     /** Export functions for use from non-browser environments (Like node.js) */
     if (typeof exports !== 'undefined') {
         exports.fetchKivaPartners = fetchKivaPartners;
-
-        // dummy object so we don't have to require datatables
-        $.fn= {dataTable: {ext: {buttons: {}}}};
     }
 }(jQuery, document, window, typeof exports === 'undefined' ? undefined : exports));
