@@ -21,7 +21,7 @@
      * from node.js
      */
     if (typeof exports !== 'undefined') {
-        $.fn= {dataTable: {ext: {buttons: {}}}};
+        $.fn= {dataTable: {ext}};
     }
 
     /******** DataTables Setup ********/
