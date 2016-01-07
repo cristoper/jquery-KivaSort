@@ -134,24 +134,27 @@
 
     /******** Custom DataTables buttons  ********/
 
-    /** A simple button to show the raw JSON data
-    */
-    $.fn.dataTable.ext.buttons.json = {
-        className: 'buttons-json buttons-html5',
-        available: function () {
-            return window.Blob;
-        },
-        text: 'JSON',
-        action: function ( e, dt, button, config ) {
-            // Set the text
-            var output = KivaSort.fetchedJSON.data;
-            var json = JSON.stringify({ partners: output });
-            var blob = new Blob([json],
-                                {type : 'application/json'});
-                                var url = URL.createObjectURL(blob);
-                                window.open(url);
-        }
-    };
+    if ($.fn.dataTable.ext.buttons !== 'undefined') {
+
+        /** A simple button to show the raw JSON data
+        */
+        $.fn.dataTable.ext.buttons.json = {
+            className: 'buttons-json buttons-html5',
+            available: function () {
+                return window.Blob;
+            },
+            text: 'JSON',
+            action: function ( e, dt, button, config ) {
+                // Set the text
+                var output = KivaSort.fetchedJSON.data;
+                var json = JSON.stringify({ partners: output });
+                var blob = new Blob([json],
+                                    {type : 'application/json'});
+                                    var url = URL.createObjectURL(blob);
+                                    window.open(url);
+            }
+        };
+    }
 
     /******** Main Plugin Functions ********/
 
