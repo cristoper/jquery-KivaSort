@@ -8,7 +8,7 @@
     "use strict";
 
     var partnersURL = 'http://www.kiva.org/partners/';    
-    var apiURL = 'http://api.kivaws.org/v1/partners.json';    
+    var apiURL = 'http://api.kivaws.org/v1/partners.json';
     var undefinedValue = 999;
     var naText = '-'; // text to display when a value is N/A
     var numericColumns = ['average_loan_size_percent_per_capita_income', 'currency_exchange_loss_rate', 'default_rate', 'delinquency_rate', 'id', 'loans_at_risk_rate', 'loans_posted', 'portfolio_yield', 'profitability', 'total_amount_raised']; 
@@ -266,18 +266,6 @@
                 return t != table;
             });
             $(table).DataTable().clear().destroy();
-        });
-    }
-
-    /** Re-fetch the JSON data from the server
-     *
-     * This is useful, for example, if an AJAX error occurs during the first
-     * attempt.
-     */
-    KivaSort.refreshJSON = function() {
-        delete KivaSort.didAJAX;
-        $.each(KivaSort.tables, function(index, table) {
-            $(table).DataTable().ajax.reload();
         });
     }
 
