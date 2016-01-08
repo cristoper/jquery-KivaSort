@@ -1,10 +1,9 @@
 /**
- * @file KivaSort is a JQuery plugin which makes it easy to include a sortable
- * table of Kiva.org's field partners in an HTML document. All the heavy
- * lifting is done by the DataTables plugin (http://datatables.net/).
- * @author Chris Burkhardt <chris@mretc.net> 
- *
- */
+* @file KivaSort is a JQuery plugin which makes it easy to include a sortable
+* table of Kiva.org's field partners in an HTML document. All the heavy
+* lifting is done by the DataTables plugin (http://datatables.net/).
+* @author Chris Burkhardt <chris@mretc.net>
+*/
 ;(function ($, document, window, exports) {
     "use strict";
 
@@ -151,7 +150,9 @@
 
     /******** Main Plugin Functions ********/
 
-    /** Namespace for global plugin state */
+    /** Namespace for global plugin state
+    *  (The ajax Deferred and data objects are shared between all KivaSort tables)
+    * */
     var KivaSort = {};
 
     /** KivaSort.tables is a global array of each table element (not jquery
@@ -224,6 +225,20 @@
         });
     };
 
+    /** JQuery function to reload a table */
+    $.fn.reloadKivaTable = function() {
+        delete KivaSort.didAJAX;
+        KivaSort.fetchedJSON = new $.Deferred();
+        KivaSort.fetchedJSON.data = {};
+
+        return this.each(function(index, el) {
+            var dTable = $(this).DataTable();
+            dTable.clear().draw();
+            dTable.ajax.reload();
+        });
+
+    }
+
     /** JQuery function to remove KivaSort from target table elements
      *
      * This essentially is the reverse of .makeKivaTable(). It removes the
@@ -236,7 +251,6 @@
             KivaSort.tables = $.grep(KivaSort.tables, function(t) {
                 return t != table;
             });
-
             $(table).DataTable().clear().destroy();
         });
     }
@@ -312,7 +326,7 @@
 
             var link = $.parseHTML("<a href='#' title='Click to retry fetching data from Kiva'>Try again</a>")
             $(link).click(function(e) {
-                KivaSort.refreshJSON();
+                table.reloadKivaTable();
                 return false;
             });
             err_row.append(link);
