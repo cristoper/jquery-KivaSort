@@ -17,13 +17,6 @@
     var textColumns = ['due_diligence_type', 'name', 'rating', 'status', 'url'];
     var linkColumns = ['name', 'url'];
 
-    /** dummy object so we don't have to require datatables
-     * from node.js
-     */
-    if (typeof exports !== 'undefined') {
-        $.fn= {dataTable: {ext}};
-    }
-
     /******** DataTables Setup ********/
 
     // The DataTables defaults
