@@ -330,7 +330,7 @@
     function jsonFailed(jqXHR, textStatus, errorThrown) {
         KivaSort.fetchedJSON.data = [];
         KivaSort.fetchedJSON.reject();
-        if (typeof exports === 'undefined') {
+        if (typeof exports !== 'undefined') {
             // We were called from a non-browser environment (like node.js)
             console.log('Error fetching JSON: ' + textStatus);
         }
