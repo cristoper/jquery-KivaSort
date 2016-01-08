@@ -296,7 +296,7 @@
         /** This is called when the AJAX call succeeds to let DataTables know
          * we have the data (datatables expect the data to be in the 'data'
          * property of the argument */
-        KivaSort.fetchedJSON.always(function(json) {
+        KivaSort.fetchedJSON.done(function(json) {
             callback({data: json});
         });
     }
@@ -328,7 +328,7 @@
 
             var link = $.parseHTML("<a href='#' title='Click to retry fetching data from Kiva'>Try again</a>")
             $(link).click(function(e) {
-                table.reloadKivaTable();
+                $(table).reloadKivaTable();
                 return false;
             });
             err_row.append(link);
