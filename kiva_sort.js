@@ -146,6 +146,20 @@
                                     window.open(url);
             }
         };
+
+        /** A Refresh button to force fetching up-to-date json from kiva API */
+        $.fn.dataTable.ext.buttons.reload = {
+            className: 'buttons-reload',
+            text: 'Reload',
+            action: function ( e, dt, button, config ) {
+                var kTable = dt.table().node();
+
+                // Unset current data to force ajax update
+                kTable.opts.ks_partnerData = null;
+
+                $(kTable).reloadKivaTable();
+            }
+        };
     }
 
     /******** Main Plugin Functions ********/
