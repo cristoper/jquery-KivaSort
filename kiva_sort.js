@@ -127,7 +127,7 @@
 
     /******** Custom DataTables buttons  ********/
 
-    if ($.fn.dataTable.ext.buttons !== 'undefined') {
+    if (typeof $.fn.dataTable.ext.buttons !== 'undefined') {
 
         /** A simple button to show the raw JSON data
         */
