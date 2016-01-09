@@ -34,7 +34,8 @@
      * @see http://datatables.net/reference/option/columns.data
      */
     function getData(row, type, set, meta) {
-        var colName = meta.settings.nTable.columns[meta.col];
+        var api = new $.fn.dataTable.Api(meta.settings);
+        var colName = api.table().node().columns[meta.col];
         var field = row[colName];
 
         if (type == "sort" || type == "type") {
@@ -276,7 +277,8 @@
      * @see http://datatables.net/reference/option/ajax
      */
     function fetchData(data, callback, settings) {
-        var table = settings.nTable;
+        var api = new $.fn.dataTable.Api(settings);
+        var table = api.table().node();
 
         if (table.opts.ks_partnerData) {
             /* We were given data directly for this table, no need to make API
