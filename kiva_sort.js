@@ -1,22 +1,20 @@
 /**
- * @file KivaSort is a JQuery plugin which makes it easy to include a sortable
- * table of Kiva.org's field partners in an HTML document. All the heavy
- * lifting is done by the DataTables plugin (http://datatables.net/).
- * @author Chris Burkhardt <chris@mretc.net> 
- *
- */
-;(function ($, document, window) {
+* @file KivaSort is a JQuery plugin which makes it easy to include a sortable
+* table of Kiva.org's field partners in an HTML document. All the heavy
+* lifting is done by the DataTables plugin (http://datatables.net/).
+* @author Chris Burkhardt <chris@mretc.net>
+*/
+;(function ($, document, window, exports) {
     "use strict";
 
     var partnersURL = 'http://www.kiva.org/partners/';    
-    var apiURL = 'http://api.kivaws.org/v1/partners.json';    
+    var apiURL = 'http://api.kivaws.org/v1/partners.json';
     var undefinedValue = 999;
     var naText = '-'; // text to display when a value is N/A
     var numericColumns = ['average_loan_size_percent_per_capita_income', 'currency_exchange_loss_rate', 'default_rate', 'delinquency_rate', 'id', 'loans_at_risk_rate', 'loans_posted', 'portfolio_yield', 'profitability', 'total_amount_raised']; 
     var percentColumns = [ 'average_loan_size_percent_per_capita_income', 'currency_exchange_loss_rate', 'default_rate', 'delinquency_rate', 'loans_at_risk_rate', 'portfolio_yield', 'profitability'];
     var textColumns = ['due_diligence_type', 'name', 'rating', 'status', 'url'];
     var linkColumns = ['name', 'url'];
-
 
     /******** DataTables Setup ********/
 
@@ -36,7 +34,8 @@
      * @see http://datatables.net/reference/option/columns.data
      */
     function getData(row, type, set, meta) {
-        var colName = meta.settings.nTable.columns[meta.col];
+        var api = new $.fn.dataTable.Api(meta.settings);
+        var colName = api.table().node().columns[meta.col];
         var field = row[colName];
 
         if (type == "sort" || type == "type") {
@@ -126,10 +125,49 @@
         }).get();
     }
 
+    /******** Custom DataTables buttons  ********/
+
+    if (typeof $.fn.dataTable.ext.buttons !== 'undefined') {
+
+        /** A simple button to show the raw JSON data
+        */
+        $.fn.dataTable.ext.buttons.json = {
+            className: 'buttons-json buttons-html5',
+            available: function () {
+                return window.Blob;
+            },
+            text: 'JSON',
+            action: function ( e, dt, button, config ) {
+                // Set the text
+                var output = KivaSort.fetchedJSON.data;
+                var json = JSON.stringify({ partners: output });
+                var blob = new Blob([json],
+                                    {type : 'application/json'});
+                                    var url = URL.createObjectURL(blob);
+                                    window.open(url);
+            }
+        };
+
+        /** A Refresh button to force fetching up-to-date json from kiva API */
+        $.fn.dataTable.ext.buttons.reload = {
+            className: 'buttons-reload',
+            text: 'Reload',
+            action: function ( e, dt, button, config ) {
+                var kTable = dt.table().node();
+
+                // Unset current data to force ajax update
+                kTable.opts.ks_partnerData = null;
+
+                $(kTable).reloadKivaTable();
+            }
+        };
+    }
 
     /******** Main Plugin Functions ********/
 
-    /** Namespace for global plugin state */
+    /** Namespace for global plugin state
+    *  (The ajax Deferred and data objects are shared between all KivaSort tables)
+    * */
     var KivaSort = {};
 
     /** KivaSort.tables is a global array of each table element (not jquery
@@ -202,6 +240,20 @@
         });
     };
 
+    /** JQuery function to reload a table */
+    $.fn.reloadKivaTable = function() {
+        delete KivaSort.didAJAX;
+        KivaSort.fetchedJSON = new $.Deferred();
+        KivaSort.fetchedJSON.data = {};
+
+        return this.each(function(index, el) {
+            var dTable = $(this).DataTable();
+            dTable.clear().draw();
+            dTable.ajax.reload();
+        });
+
+    }
+
     /** JQuery function to remove KivaSort from target table elements
      *
      * This essentially is the reverse of .makeKivaTable(). It removes the
@@ -214,20 +266,7 @@
             KivaSort.tables = $.grep(KivaSort.tables, function(t) {
                 return t != table;
             });
-
             $(table).DataTable().clear().destroy();
-        });
-    }
-
-    /** Re-fetch the JSON data from the server
-     *
-     * This is useful, for example, if an AJAX error occurs during the first
-     * attempt.
-     */
-    KivaSort.refreshJSON = function() {
-        delete KivaSort.didAJAX;
-        $.each(KivaSort.tables, function(index, table) {
-            $(table).DataTable().ajax.reload();
         });
     }
 
@@ -238,7 +277,8 @@
      * @see http://datatables.net/reference/option/ajax
      */
     function fetchData(data, callback, settings) {
-        var table = settings.nTable;
+        var api = new $.fn.dataTable.Api(settings);
+        var table = api.table().node();
 
         if (table.opts.ks_partnerData) {
             /* We were given data directly for this table, no need to make API
@@ -255,33 +295,42 @@
             fetchKivaPartners(1);
         }
 
-        // This is called when the AJAX call succeeds to let DataTables know we
-        // have the data
-        KivaSort.fetchedJSON.done(function () {
-            callback(KivaSort.fetchedJSON);
+        /** This is called when the AJAX call succeeds to let DataTables know
+         * we have the data (datatables expect the data to be in the 'data'
+         * property of the argument */
+        KivaSort.fetchedJSON.done(function(json) {
+            callback({data: json});
         });
     }
 
-    /** Initiate the AJAX call */
+    /** Initiate the AJAX call 
+    *  @returns A jquery promise. Calling done() on the promise will return the
+    *  data when it is available*/
     function fetchKivaPartners(pageNum) {
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
         $.getJSON(apiURL, {'page': pageNum, 'app_id': KivaSort.app_id})
         .done(gotKivaPage)
         .fail(jsonFailed);
+
+        return KivaSort.fetchedJSON;
     }
 
     /** This is called when the AJAX request fails */
-    function jsonFailed() {
+    function jsonFailed(jqXHR, textStatus, errorThrown) {
         KivaSort.fetchedJSON.data = [];
-        KivaSort.fetchedJSON.resolve();
+        KivaSort.fetchedJSON.reject();
+        if (typeof exports !== 'undefined') {
+            // We were called from a non-browser environment (like node.js)
+            console.log('Error fetching JSON: ' + textStatus);
+        }
         $.each(KivaSort.tables, function(index, table) {
             var err_row = $(table).find('td.dataTables_empty').first();
             err_row.html("<span class='error'>Error fetching field partner data from Kiva.org.</span>");
 
             var link = $.parseHTML("<a href='#' title='Click to retry fetching data from Kiva'>Try again</a>")
             $(link).click(function(e) {
-                KivaSort.refreshJSON();
+                $(table).reloadKivaTable();
                 return false;
             });
             err_row.append(link);
@@ -296,13 +345,11 @@
         var curPage = data.paging.page;
         if (data.paging.pages > curPage) {
             // There are more pages of field partners JSON to retrieve
-            fetchKivaPartners(curPage + 1);
+            KivaSort.fetchKivaPartners(curPage + 1);
         } else if (KivaSort.fetchedJSON.data) {
             // We got all of the pages
             preProcessJSON(KivaSort.fetchedJSON.data);
-            // DataTables expects the data to be in the "data" property
-            KivaSort.fetchedJSON.data = KivaSort.fetchedJSON.data.partners;
-            KivaSort.fetchedJSON.resolve();
+            KivaSort.fetchedJSON.resolve(KivaSort.fetchedJSON.data.partners);
         }
     }
 
@@ -335,4 +382,9 @@
             partner.country = partner.countries[0].name || partner.countries[0].iso_code;
         });
     }
-}(jQuery, document, window));
+
+    /** Export functions for use from non-browser environments (Like node.js) */
+    if (typeof exports !== 'undefined') {
+        exports.fetchKivaPartners = fetchKivaPartners;
+    }
+}(jQuery, document, window, typeof exports === 'undefined' ? undefined : exports));
