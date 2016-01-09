@@ -249,6 +249,8 @@ This means KivaSort can be run from the command line to retrieve the Kiva JSON. 
 $ ./fetchkivajson.js > partners.json
 ```
 
+Note that the script requires having the node `jquery` and `jsdom` packages installed. Running `$ npm install` from the project directory will install everything.
+
 ## License
 
 KivaSort is licensed under the term of the [WTFPL](http://www.wtfpl.net/about/), version 2. See [LICENSE.txt](LICENSE.txt) as included with this project.
