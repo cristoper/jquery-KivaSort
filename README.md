@@ -6,7 +6,7 @@ For live examples, see: http://cristoper.github.io/jquery-KivaSort/
 
 KivaSort makes it easy to add several such tables to a single HTML document (each one pre-sorted and filtered on different criteria, for example).
 
-DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, and the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table.
+DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table, and many read-made plugins are available for DataTables which add useful features to the table (fixed headers, sortable columns, etc.)
 
 * [KivaSort in the Wild](#kivasort-in-the-wild)
 * [Installation](#installation)
@@ -157,7 +157,7 @@ For example, this table would be populated with the same data as the first examp
 
 ### Options
 
-The `makeKivaSort()` function may be passed an option object. Most options are passed on to the DataTables instance, but KivaSort accepts two options of its own:
+The `makeKivaSort()` function may be passed an option object. Most options are passed on to the DataTables instance allowing you to fully customize the look and behavior of the table, but KivaSort accepts two options of its own:
 
 * `ks_appID` - the app_id to pass along with all requests to the Kiva API (should be reverse-DNS string). See: http://build.kiva.org/docs/linking_to_kiva/app_id
 
@@ -167,7 +167,9 @@ For example, to include your app_id with all API calls to Kiva, invoke `makeKiva
 
 ```javascript
 $(document).ready(function () {
-    $('#KivaSort').makeKivaTable({ks_appID: 'tld.your.appid'});
+    $('#KivaSort').makeKivaTable({
+        ks_appID: 'tld.your.appid'
+    });
 });
 ```
 
