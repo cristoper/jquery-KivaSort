@@ -194,6 +194,24 @@ $(document).ready(function () {
 });
 ```
 
+##### Custom Buttons
+
+The [Buttons extension](https://datatables.net/extensions/buttons/) provides many standard buttons for use with datatables (for exporting data, hiding columns, etc.). If the Buttons extension is loaded, then jquery-kivasort provides two custom buttons:
+
+- `json` - opens a new tab/window and displays the partners list in JSON format
+- `reload` - forces the table to re-fetch data from Kiva and reload it
+
+Use the buttons just like any of the buttons which come with the Buttons extension:
+
+```javascript
+$('#KivaSort').makeKivaTable({
+     buttons: ['pageLength', 'reload', 'json'],
+     dom: 'Bftip'
+});
+```
+
+Also check out the "Using Cached Data" example (on the [examples page](http://cristoper.github.io/jquery-KivaSort/)).
+
 ### Remove a KivaSort Table
 
 A KivaSort instance may be removed from a table using the `removeKivaTable()` function.  This essentially is the reverse of .makeKivaTable(). It removes the target table(s) from KivaSort.tables array, clears the data, then destroys the table's associated DataTables instance:
