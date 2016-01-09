@@ -8,16 +8,27 @@ KivaSort makes it easy to add several such tables to a single HTML document (eac
 
 DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table, and many read-made plugins are available for DataTables which add useful features to the table (fixed headers, sortable columns, etc.)
 
-* [KivaSort in the Wild](#kivasort-in-the-wild)
-* [Installation](#installation)
-* [Usage](#usage)
-    * [Basic Table](#basic-table)
-    * [Column Names and Arbitrary Column Names](#column-names-and-arbitrary-column-names)
-    * [Options](#options)
-        * [DataTables Options](#datatables-options)
-    * [Remove KivaSort](#remove-kivasort)
-* [License](#license)
-* [Contributing](#contributing)
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
+
+ - [KivaSort in the Wild](#kivasort-in-the-wild)
+ - [Installation](#installation)
+   - [Plain File](#plain-file)
+   - [Bower and npm Packages](#bower-and-npm-packages)
+   - [Add KivaSort To Your HTML](#add-kivasort-to-your-html)
+ - [Usage](#usage)
+   - [Basic Table](#basic-table)
+   - [Column Names and Arbitrary Column Names](#column-names-and-arbitrary-column-names)
+   - [Options](#options)
+     - [DataTables Options](#datatables-options)
+       - [Custom Buttons](#custom-buttons)
+   - [Remove a KivaSort Table](#remove-a-kivasort-table)
+   - [Reload a KivaSort Table](#reload-a-kivasort-table)
+ - [License](#license)
+ - [Contributing](#contributing)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## KivaSort in the Wild
 
