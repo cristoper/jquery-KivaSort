@@ -29,7 +29,7 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 
 The KivaSort plugin is contained in a single JavaScript file, [kiva_sort.js](https://raw.githubusercontent.com/cristoper/jquery-KivaSort/master/js/kiva_sort.js). You can find the latest stable version in the master branch of [its github repository](https://github.com/cristoper/jquery-KivaSort)
 
-### Bower Package
+### Bower and npm Packages
 
 If you use [Bower](http://bower.io/) to manage your project dependencies, you can install KivaSort by running:
 
@@ -37,7 +37,13 @@ If you use [Bower](http://bower.io/) to manage your project dependencies, you ca
 bower install jquery-kivasort
 ```
 
-If you don't use bower, just download the `kiva_sort.js` file from Github.
+Likewise if you use [npm](https://www.npmjs.com/) to manage your dependencies, you can install jquery-kivasort by running:
+
+```sh
+npm install jquery-kivasort
+```
+
+If you don't use bower or npm, just download the `kiva_sort.js` file from Github.
 
 ### Add KivaSort To Your HTML
 
