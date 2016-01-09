@@ -19,6 +19,7 @@
 
         <style type="text/css">
             body { padding: 1em;}
+            body p { max-width: 30em; }
             iframe { margin-top: 1em; }
         </style>
     </head>
@@ -27,7 +28,6 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <!-- Add your site or application content here -->
         <h1>KivaSort (JQuery Plugin) Examples</h1>
         <p><a href='https://github.com/cristoper/jquery-KivaSort'>KivaSort</a> is a simple JQuery plugin which uses the <a href='http://build.kiva.org/'>Kiva API</a> to get information on all of the Kiva field partners, and then uses the <a href='http://www.datatables.net/'>DataTables JQuery Plugin</a> to wrap the data in a dynamic sortable and filterable table.
 
@@ -39,31 +39,31 @@
 
         <h2>Simple Table</h2>
 
-        <p>A basic six-column table:
+        <p>A basic six-column table:</p>
         
         <a class="jsbin-embed" href="http://jsbin.com/vujoje/embed?html,js,output">Kiva Sort</a>
 
         <h2>Arbitrary Column Names</h2>
 
-        <p>This example demonstrates how to use the <code>data-title</code> attribute on the table's <code>TH</code> elements to set the data for that column, allowing an arbitrary human-readable column title:
+        <p>This example demonstrates how to use the <code>data-title</code> attribute on the table's <code>TH</code> elements to set the data for that column, allowing an arbitrary human-readable column title:</p>
 
         <a class="jsbin-embed" href="http://jsbin.com/lezov/embed?html,js,output">Kiva Sort</a>
 
         <h2>DataTables Options and API</h2>
 
-        <p>This example demonstrates how to pass options to DataTables (in this case, 'pageLength', 'scrollX', and 'order'). The order attribute causes the table's default sort order to be Portfolio Yield and then Profitability in descending order. It also uses the DataTables API (the 'columns() and search() functions) to filter out rows which don't have any Portfolio Yield or Profitability data. The effect is a small table which makes it easy to find the field partners with the highest interest rates.
+        <p>This example demonstrates how to pass options to DataTables (in this case, 'pageLength', 'scrollX', and 'order'). The order attribute causes the table's default sort order to be Portfolio Yield and then Profitability in descending order. It also uses the DataTables API (the 'columns() and search() functions) to filter out rows which don't have any Portfolio Yield or Profitability data. The effect is a small table which makes it easy to find the field partners with the highest interest rates.</p>
 
         <a class="jsbin-embed" href="http://jsbin.com/sesaxi/embed?html,js,output">Kiva Sort</a>
 
         <h2>Using Cached Data</h2>
 
-        <p>This example uses the <code>ks_partnerData</code> option to load local JSON (a portion of the data fetched from the Kiva API earlier) to populate the table. No AJAX call is made.
+        <p>This example uses the <code>ks_partnerData</code> option to load local JSON (a portion of the data fetched from the Kiva API earlier) to populate the table. No AJAX call is made.</p>
 
         <a class="jsbin-embed" href="http://jsbin.com/bihida/embed?html,js,output">Kiva Sort</a>
 
         <h2>All Columns</h2>
 
-        <p>The following columns are available or use in your KivaSort table:
+        <p>The following columns are available or use in your KivaSort table:</p>
 
         <ul>
             <li>Average Loan Size Percent Per Capita Income</li>
