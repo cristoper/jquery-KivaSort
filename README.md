@@ -239,6 +239,16 @@ A KivaSort instance may be removed from a table using the `removeKivaTable()` fu
 $('#KivaSort').removeKivaTable();
 ```
 
+### Use as a node.js module
+
+In addition to being a jquery plugin, KivaSort can be imported as a [node.js](https://nodejs.org/en/) module. It exports a single function, `fetchKivaPartners()`, which asynchronously fetches, cleans up, and returns the list of Kiva field partners from the Kiva web service (in JSON format).
+
+This means KivaSort can be run from the command line to retrieve the Kiva JSON. Toward that end, a very simple node script is included ([`fetchkivajson.js`](https://github.com/cristoper/jquery-KivaSort/blob/dev/fetchkivajson.js)). Run it like this to save the fetched JSON to a file:
+
+```bash
+$ ./fetchkivajson.js > partners.json
+```
+
 ## License
 
 KivaSort is licensed under the term of the [WTFPL](http://www.wtfpl.net/about/), version 2. See [LICENSE.txt](LICENSE.txt) as included with this project.
