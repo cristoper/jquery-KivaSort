@@ -12,21 +12,21 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
- - [KivaSort in the Wild](#kivasort-in-the-wild)
- - [Installation](#installation)
-   - [Plain File](#plain-file)
-   - [Bower and npm Packages](#bower-and-npm-packages)
-   - [Add KivaSort To Your HTML](#add-kivasort-to-your-html)
- - [Usage](#usage)
-   - [Basic Table](#basic-table)
-   - [Column Names and Arbitrary Column Names](#column-names-and-arbitrary-column-names)
-   - [Options](#options)
-     - [DataTables Options](#datatables-options)
-       - [Custom Buttons](#custom-buttons)
-   - [Remove a KivaSort Table](#remove-a-kivasort-table)
-   - [Reload a KivaSort Table](#reload-a-kivasort-table)
- - [License](#license)
- - [Contributing](#contributing)
+- [Installation](#installation)
+  - [Plain File](#plain-file)
+  - [Bower and npm Packages](#bower-and-npm-packages)
+  - [Add KivaSort To Your HTML](#add-kivasort-to-your-html)
+- [Usage](#usage)
+  - [Basic Table](#basic-table)
+  - [Column Names and Arbitrary Column Names](#column-names-and-arbitrary-column-names)
+  - [Options](#options)
+    - [DataTables Options](#datatables-options)
+    - [Custom Buttons](#custom-buttons)
+  - [Reload a KivaSort Table](#reload-a-kivasort-table)
+  - [Remove a KivaSort Table](#remove-a-kivasort-table)
+  - [Use as a node.js module](#use-as-a-nodejs-module)
+- [License](#license)
+- [Contributing](#contributing)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
