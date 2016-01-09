@@ -1,6 +1,6 @@
 # KivaSort - A JQuery Plugin
 
-KivaSort is a simple JQuery plugin which uses the [Kiva API](http://build.kiva.org/) to get information on all of the Kiva field partners, and then uses the [DataTables JQuery Plugin](http://www.datatables.net/) to wrap the data in a dynamic sortable and filterable table.
+KivaSort (`jquery-kivasort`) is a simple JQuery plugin which uses the [Kiva API](http://build.kiva.org/) to get information on all of the Kiva field partners, and then uses the [DataTables JQuery Plugin](http://www.datatables.net/) to wrap the data in a dynamic sortable and filterable table.
 
 For live examples, see: http://cristoper.github.io/jquery-KivaSort/
 
