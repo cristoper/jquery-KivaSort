@@ -205,7 +205,7 @@ $(document).ready(function () {
 });
 ```
 
-##### Custom Buttons
+#### Custom Buttons
 
 The [Buttons extension](https://datatables.net/extensions/buttons/) provides many standard buttons for use with datatables (for exporting data, hiding columns, etc.). If the Buttons extension is loaded, then jquery-kivasort provides two custom buttons:
 
