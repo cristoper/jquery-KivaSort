@@ -1,9 +1,16 @@
 /**
-* @file KivaSort is a JQuery plugin which makes it easy to include a sortable
+* @file KivaSort is a jQuery plugin which makes it easy to include a sortable
 * table of Kiva.org's field partners in an HTML document. All the heavy
 * lifting is done by the DataTables plugin (http://datatables.net/).
 * @author Chris Burkhardt <chris@mretc.net>
 */
+
+/**
+* @module jquery-kivasort
+* @requires jquery
+* @requires datatables
+*/
+
 ;(function ($, document, window, exports) {
     "use strict";
 
@@ -27,10 +34,12 @@
         }]
     };
 
-    /** The function DataTables calls when it needs data for a cell. This
-     * allows us to format some data nicely for display and filtering (links,
-     * percentages, etc) while leaving the raw data for sorting.
+    /** This is the function DataTables calls when it needs data for a cell.
+     * Providing this function allows us to format some data nicely for display
+     * and filtering (links, percentages, etc) while leaving the raw data for
+     * sorting.  @memberof module:jquery-kivasort
      *
+     * @returns {String} - The text (HTML) to display for the requested cell
      * @see http://datatables.net/reference/option/columns.data
      */
     function getData(row, type, set, meta) {
@@ -90,12 +99,12 @@
     }
 
     /** A helper function for outputting HTML links
-     *
-     * @param record The record (row) containing the text and URL
-     * @param {string} column The column from which the link text should be
+     * @memberof module:jquery-kivasort
+     * @param {Object} record - The record (row) containing the text and URL
+     * @param {String} column - The column from which the link text should be
      *   taken (ex: "name")
      *
-     * @returns {string} HTML for link
+     * @returns {String} HTML for link
      */
     function writeLink(record, column) {
         // build tag attributes to pass to jQuery()
@@ -111,12 +120,13 @@
     }
 
     /** Get list of column names (thead) for the given JQuery table element
+     * @memberof module:jquery-kivasort
      *
-     * @param table A JQuery object (not a plain DOM object) containing the
-     *   <table> element from which to collect column names
+     * @param {jQuery} table - The table element from which to
+     * collect column names
      *
-     * @returns {Array} An array of strings; each element is a column name, in
-     *   order
+     * @returns {String[]} An array of strings; each element is a column name, in
+     * order
      */
     function columnNames(table) {
         return table.find('th').map(function () { 
@@ -129,8 +139,7 @@
 
     if (typeof $.fn.dataTable.ext.buttons !== 'undefined') {
 
-        /** A simple button to show the raw JSON data
-        */
+        /** A simple button to show the raw JSON data */
         $.fn.dataTable.ext.buttons.json = {
             className: 'buttons-json buttons-html5',
             available: function () {
@@ -166,8 +175,9 @@
     /******** Main Plugin Functions ********/
 
     /** Namespace for global plugin state
-    *  (The ajax Deferred and data objects are shared between all KivaSort tables)
-    * */
+     *  (The ajax Deferred and data objects are shared between all KivaSort
+     *  tables)
+     */
     var KivaSort = {};
 
     /** KivaSort.tables is a global array of each table element (not jquery
@@ -189,25 +199,27 @@
      *   $('#KivaSort').makeKivaTable();
      * });
      *
-     * @param {Object} opts An object containing the KivaSort configuration
-     *   options. There are only two options specific to KivaSort, the rest will
-     *   be passed to the DataTables instance applied to the target table(s) (see
-     *   http://datatables.net/reference/option/)
+     * @memberof module:jquery-kivasort
      *
-     *   The two KivaSort options which may be passed are:
+     * @param {Object} opts - An object containing the KivaSort configuration
+     * options. There are only two options specific to KivaSort, the rest will
+     * be passed to the DataTables instance applied to the target table(s) (see
+     * http://datatables.net/reference/option/)
+     *
+     * The two KivaSort options which may be passed are:
      *   
-     *     * 'ks_appID' - the app_id to pass along with all requests to the Kiva
-     *     API (should be reverse-DNS string). See:
+     *   * 'ks_appID' - the app_id to pass along with all requests to the
+     *     Kiva API (should be reverse-DNS string). See:
      *     http://build.kiva.org/docs/linking_to_kiva/app_id
      *
-     *     * 'ks_partnerData' - An object containing JSON data just like what
+     *   * 'ks_partnerData' - An object containing JSON data just like what
      *     the Kiva API returns. When this option is present, KivaSort will not
      *     make any API calls, and will instead use the given data as if it
      *     came from Kiva.org. This is useful, for example, for using cached
      *     data instead of calling the Kiva servers every time.
      *
-     * @returns A JQuery object wrapping each of the table elements so that
-     *   further JQuery functions may be chained after .makeKivaTable()
+     * @returns {jQuery} A JQuery object wrapping each of the table elements so
+     * that further JQuery functions may be chained after .makeKivaTable()
      */
     $.fn.makeKivaTable = function(opts) {
         var opts = opts || {};
@@ -273,6 +285,7 @@
     /******** AJAX Functions ********/
 
     /** This is the function DataTables calls to get its data.
+     * @memberof module:jquery-kivasort
      *
      * @see http://datatables.net/reference/option/ajax
      */
@@ -316,7 +329,9 @@
         return KivaSort.fetchedJSON;
     }
 
-    /** This is called when the AJAX request fails */
+    /** This is called when the AJAX request fails
+     * @memberof module:jquery-kivasort
+     */
     function jsonFailed(jqXHR, textStatus, errorThrown) {
         KivaSort.fetchedJSON.data = [];
         KivaSort.fetchedJSON.reject();
@@ -339,6 +354,9 @@
 
     /** This is called on each page of data retrieved from the Kiva API. It
      * then initiates the fetch of the next page until we have all of the data
+     * @memberof module:jquery-kivasort
+     *
+     * @param {JSON} data - The data returned from the server
      * */
     function gotKivaPage(data) {
         $.extend(KivaSort.fetchedJSON.data, data);
@@ -354,7 +372,10 @@
     }
 
     /** Do some in-place preprocessing of fetched JSON
-    */
+     * @memberof module:jquery-kivasort
+     *
+     * @param {JSON} data - A JSON object to clean up
+     */
     function preProcessJSON(data) {
         data.partners.forEach(function (partner) {
             /* If a numeric column is undefined, sort it as
@@ -383,7 +404,9 @@
         });
     }
 
-    /** Export functions for use from non-browser environments (Like node.js) */
+    /** Export functions for use from non-browser environments (Like node.js)
+     * @memberof module:jquery-kivasort
+     */
     if (typeof exports !== 'undefined') {
         exports.fetchKivaPartners = fetchKivaPartners;
     }
