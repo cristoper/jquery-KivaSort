@@ -12,15 +12,16 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 **Table of Contents**  *generated with [DocToc](https://github.com/thlorenz/doctoc)*
 
+- [KivaSort in the Wild](#kivasort-in-the-wild)
 - [Installation](#installation)
-  - [Plain File](#plain-file)
+  - [Plain File From Git](#plain-file-from-git)
   - [Bower and npm Packages](#bower-and-npm-packages)
   - [Add KivaSort To Your HTML](#add-kivasort-to-your-html)
 - [Usage](#usage)
   - [Basic Table](#basic-table)
   - [Column Names and Arbitrary Column Names](#column-names-and-arbitrary-column-names)
   - [Options](#options)
-    - [DataTables Options](#datatables-options)
+  - [Customizing and Styling The Underlying Datatables Table](#customizing-and-styling-the-underlying-datatables-table)
     - [Custom Buttons](#custom-buttons)
   - [Reload a KivaSort Table](#reload-a-kivasort-table)
   - [Remove a KivaSort Table](#remove-a-kivasort-table)
