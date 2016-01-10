@@ -34,7 +34,7 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 
 * [KivaSort.org](http://www.kivasort.org/)
 
-## Get It
+## Installation
 
 ### Plain File From Git
 
@@ -158,25 +158,7 @@ The following columns are available for use in your template table:
 
 Column names are case insensitive, and spaces may be replaced with underscores (so `Loans Posted`, `loans posted` and `loans_posted` will all be populated with the same data when `makeKivaTable()` is applied to the table element).
 
-Arbitrary column names are possible by adding a `data-title` attribute to the `<th>` element containing one of the valid column names (as listed above), and the human-readable contents of the `<th>` tag may be anything.
-
-For example, this table would be populated with the same data as the first example but with two arbitrary column names:
-
-```html
-<table id="KivaSort">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th data-title='name'>Field Partner</th>
-            <th data-title='portfolio_yield'>Portfolio Yield (interest)</th>
-            <th>Profitability</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-```
+Arbitrary column names are possible by using the Datatables [columns.name](https://datatables.net/reference/option/columns.name) option.  The [examples page](http://cristoper.github.io/jquery-KivaSort/) includes an example demonstrating the use of the `columns.name` option.
 
 ### Options
 
