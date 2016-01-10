@@ -202,7 +202,7 @@ $(document).ready(function () {
 });
 ```
 
-Datatables provides many styling possibilities: manual CSS, a theme creator, Bootstrap, Foundation, and jQuery-UI. TO learn more read [the "Styling" section] of the Datatables manual(http://datatables.net/manual/styling/).
+Datatables provides many styling possibilities: manual CSS, a theme creator, Bootstrap, Foundation, and jQuery-UI. To learn more read [the "Styling" section] of the Datatables manual(http://datatables.net/manual/styling/).
 
 #### Custom Buttons
 
