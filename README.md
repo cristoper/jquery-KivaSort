@@ -6,7 +6,7 @@ For live examples, see: http://cristoper.github.io/jquery-KivaSort/
 
 KivaSort makes it easy to add several such tables to a single HTML document (each one pre-sorted and filtered on different criteria, for example).
 
-DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table, and many read-made plugins are available for DataTables which add useful features to the table (fixed headers, sortable columns, etc.)
+DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table, and many ready-made plugins are available for DataTables which add useful features to the table (fixed headers, sortable columns, etc.)
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
