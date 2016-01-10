@@ -49,10 +49,10 @@ $ git remote add kivasort git@github.com:cristoper/jquery-KivaSort.git
 
 # Add the subtree (replace 'vendor/ks' with the directory where
 # KivaSort should live):
-$ git subtree add -P js/ks --squash kivasort master
+$ git subtree add -P vendor/ks --squash kivasort master
 
 # Then to update KivaSort in the future run:
-$ git subtree pull -P js/ks --squash kivasort master
+$ git subtree pull -P vendor/ks --squash kivasort master
 ```
 
 ### Bower and npm Packages
