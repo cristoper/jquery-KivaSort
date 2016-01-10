@@ -205,7 +205,7 @@ Datatables provides many styling possibilities: manual CSS, a theme creator, Boo
 
 #### Custom Buttons
 
-The [Buttons extension](https://datatables.net/extensions/buttons/) provides many standard buttons for use with datatables (for exporting data, hiding columns, etc.). If the Buttons extension is loaded, then jquery-kivasort provides two custom buttons:
+The [Buttons extension](https://datatables.net/extensions/buttons/) provides many standard buttons for use with Datatables (for exporting data, hiding columns, etc.). If the Buttons extension is loaded, then KivaSort provides two additional custom buttons:
 
 - `json` - opens a new tab/window and displays the partners list in JSON format
 - `reload` - forces the table to re-fetch data from Kiva and reload it
@@ -219,7 +219,7 @@ $('#KivaSort').makeKivaTable({
 });
 ```
 
-Also check out the "Using Cached Data" example (on the [examples page](http://cristoper.github.io/jquery-KivaSort/)).
+For a demonstration, look at the "Using Cached Data" example (on the [examples page](http://cristoper.github.io/jquery-KivaSort/)) or the table on [KivaSort.org](http://kivasort.org/).
 
 ### Reload a KivaSort Table
 
