@@ -34,15 +34,29 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 
 * [KivaSort.org](http://www.kivasort.org/)
 
-## Installation
+## Get It
 
-### Plain File
+### Plain File From Git
 
-The KivaSort plugin is contained in a single JavaScript file, [kiva_sort.js](https://raw.githubusercontent.com/cristoper/jquery-KivaSort/master/js/kiva_sort.js). You can find the latest stable version in the master branch of [its github repository](https://github.com/cristoper/jquery-KivaSort)
+The KivaSort plugin is contained in a single JavaScript file, [kiva_sort.js](https://raw.githubusercontent.com/cristoper/jquery-KivaSort/master/js/kiva_sort.js). You can find the latest stable version in the master branch of [its github repository](https://github.com/cristoper/jquery-KivaSort). Simply download it then include it in your HTML.
+
+Or a good way to include KivaSort into your project so that it is easy to check for updates is to use [git subtree](https://git-scm.com/book/en/v1/Git-Tools-Subtree-Merging):
+
+```sh
+# Add the KivaSort repo as a remote:
+$ git remote add kivasort git@github.com:cristoper/jquery-KivaSort.git
+
+# Add the subtree (replace 'vendor/ks' with the directory where
+# KivaSort should live):
+$ git subtree add -P js/ks --squash kivasort master
+
+# Then to update KivaSort in the future run:
+$ git subtree pull -P js/ks --squash kivasort master
+```
 
 ### Bower and npm Packages
 
-If you use [Bower](http://bower.io/) to manage your project dependencies, you can install KivaSort by running:
+Or, instead of git you can use a package manager. If you use [Bower](http://bower.io/), you can install KivaSort by running:
 
 ```sh
 bower install jquery-kivasort
@@ -53,8 +67,6 @@ Likewise if you use [npm](https://www.npmjs.com/) to manage your dependencies, y
 ```sh
 npm install jquery-kivasort
 ```
-
-If you don't use bower or npm, just download the `kiva_sort.js` file from Github.
 
 ### Add KivaSort To Your HTML
 
