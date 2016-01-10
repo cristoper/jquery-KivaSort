@@ -178,7 +178,9 @@ $(document).ready(function () {
 });
 ```
 
-#### DataTables Options
+### Customizing and Styling The Underlying Datatables Table
+
+KivaSort itself is a thin wrapper around the [Datatables jQuery plugin](http://datatables.net/) with knowledge of the Kiva API, and all of the themes and extensions available for Datatables can be applied to a KivaTable.
 
 To pass any of the DataTables configuration options, simply pass them in the options object to `makeKivaTable()`. The following example passes the `pageLength`, `scrollX`, and `order` DataTables options to change the table behavior. The last line uses the DataTables API to filter out any rows which contain "-" (which is the character KivaSort uses when no data is available for a column).
 
@@ -198,6 +200,8 @@ $(document).ready(function () {
     table.DataTable().columns('th').search('^(?!-$)', true, false);
 });
 ```
+
+Datatables provides many styling possibilities: manual CSS, a theme creator, Bootstrap, Foundation, and jQuery-UI. TO learn more read [the "Styling" section] of the Datatables manual(http://datatables.net/manual/styling/).
 
 #### Custom Buttons
 
