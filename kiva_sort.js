@@ -30,7 +30,7 @@
         ajax: fetchData,
         columnDefs: [{
             targets: "_all",
-            data: getData
+            render: getData
         }]
     };
 
@@ -42,9 +42,15 @@
      * @returns {String} - The text (HTML) to display for the requested cell
      * @see http://datatables.net/reference/option/columns.data
      */
-    function getData(row, type, set, meta) {
-        var api = new $.fn.dataTable.Api(meta.settings);
-        var colName = api.table().node().columns[meta.col];
+    function getData(data, type, row, meta) {
+        // This is too slow!:
+        //var api = new $.fn.dataTable.Api(meta.settings);
+        //var table = api.table().node()
+
+        /* So instead we must unfortunately rely on the private API of the
+        * settings object: */
+        var table = meta.settings.nTable;
+        var colName = table.columns[meta.col];
         var field = row[colName];
 
         if (type == "sort" || type == "type") {
