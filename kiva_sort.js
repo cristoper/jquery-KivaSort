@@ -30,7 +30,14 @@
         ajax: fetchData,
         columnDefs: [{
             targets: "_all",
-            render: getData
+
+            /* I am using the columns.data option instead of columns.render because
+             * using columns.render was throwing an error when I tried to invoke
+             * column.data() in one of my apps. The exact same function using
+             * column.render works... TODO: make a simple test case and determine if it
+             * is my bug or DataTables'.
+             */
+            data: getData
         }]
     };
 
@@ -42,19 +49,19 @@
      * @returns {String} - The text (HTML) to display for the requested cell
      * @see http://datatables.net/reference/option/columns.data
      */
-    function getData(data, type, row, meta) {
+    function getData(row, type, set, meta ) {
         // This is too slow!:
         //var api = new $.fn.dataTable.Api(meta.settings);
         //var table = api.table().node()
 
         /* So instead we must unfortunately rely on the private API of the
-        * settings object: */
+         * settings object: */
         var table = meta.settings.nTable;
         var colName = table.columns[meta.col];
         var field = row[colName];
 
-        if (type == "sort" || type == "type") {
-            // For sorting and type detection, return the raw JSON data
+        if (type != "display") {
+            // For sorting, filtering, and type detection, return the raw JSON data
             return field;
         }
 
@@ -323,8 +330,8 @@
     }
 
     /** Initiate the AJAX call 
-    *  @returns A jquery promise. Calling done() on the promise will return the
-    *  data when it is available*/
+     *  @returns A jquery promise. Calling done() on the promise will return the
+     *  data when it is available*/
     function fetchKivaPartners(pageNum) {
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
