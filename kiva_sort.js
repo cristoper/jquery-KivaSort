@@ -60,17 +60,23 @@
         var colName = table.columns[meta.col];
         var field = row[colName];
 
-        if (type != "display") {
-            // For sorting, filtering, and type detection, return the raw JSON data
+        // Handle all the undefined fields
+        if (field === undefined || field == undefinedValue) {
+            if (type == "sort") {
+                // special value for sorting
+                return undefinedValue;
+            } else {
+                return naText;
+            }
+        }
+
+        if (type !== "display") {
+            // For sorting, filtering, and type detection, return the raw JSON
+            // data
             return field;
         }
 
-        // For display and filtering, format things nicely
-
-        // Catch all the 'undefined' fields
-        if (field === undefined || field == undefinedValue) {
-            return naText;
-        }
+        // For display format things nicely...
 
         // Handle specific columns
         switch (colName) {
