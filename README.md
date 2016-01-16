@@ -4,7 +4,7 @@ KivaSort (`jquery-kivasort`) is a simple JQuery plugin which uses the [Kiva API]
 
 ## Basic Features
 
-- Fetches data from Kiva.org's API
+- Fetches field partner data from Kiva.org's API
   - Can also use local JSON data instead of contacting Kiva, if it is provided (a command-line node.js tool for fetching and outputting suitable data is included).
 - Displays much of that data (supports a total of 16 columns, any of which may be used) in a sortable, searchable table (based on the [DataTables jQuery plugin](http://datatables.net/)
 - Allows passing options to the underlying DataTable, so a KivaSort table can be customized, extended, and themed just like any DataTable.
