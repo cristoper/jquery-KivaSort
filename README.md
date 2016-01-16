@@ -1,10 +1,16 @@
 # KivaSort - A JQuery Plugin
 
-KivaSort (`jquery-kivasort`) is a simple JQuery plugin which uses the [Kiva API](http://build.kiva.org/) to get information on all of the Kiva field partners, and then uses the [DataTables JQuery Plugin](http://www.datatables.net/) to wrap the data in a dynamic sortable and filterable table.
+KivaSort (`jquery-kivasort`) is a simple JQuery plugin which uses the [Kiva API](http://build.kiva.org/) to get information on all of the Kiva field partners, and then uses SpryMedia's [DataTables JQuery Plugin](http://www.datatables.net/) to wrap the data in a dynamic sortable and filterable table.
+
+## Basic Features
+
+- Fetches data from Kiva.org's API
+  - Can also use local JSON data instead of contacting Kiva, if it is provided (a command-line node.js tool for fetching and outputting suitable data is included).
+- Displays much of that data (supports a total of 16 columns, any of which may be used) in a sortable, searchable table (based on the [DataTables jQuery plugin](http://datatables.net/)
+- Allows passing options to the underlying DataTable, so a KivaSort table can be customized, extended, and themed just like any DataTable.
+- KivaSort makes it easy to add several such tables to a single HTML document (each one pre-sorted and filtered on different criteria, for example).
 
 For live examples, see: http://cristoper.github.io/jquery-KivaSort/
-
-KivaSort makes it easy to add several such tables to a single HTML document (each one pre-sorted and filtered on different criteria, for example).
 
 DataTables does all of the heavy lifting of making the table dynamic. Any of the many [DataTables options](http://datatables.net/reference/option/) may be passed to the KivaSort table, the rich [DataTables API](http://datatables.net/reference/api/) can be used to programatically manipulate the KivaSort table, and many ready-made plugins are available for DataTables which add useful features to the table (fixed headers, sortable columns, etc.)
 
