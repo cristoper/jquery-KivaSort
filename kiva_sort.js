@@ -50,12 +50,12 @@
      * @see http://datatables.net/reference/option/columns.data
      */
     function getData(row, type, set, meta ) {
-        // This is too slow!:
-        //var api = new $.fn.dataTable.Api(meta.settings);
-        //var table = api.table().node()
-
-        /* So instead we must unfortunately rely on the private API of the
-         * settings object: */
+        if (!meta.settings.nTable) {
+            // settings object is private to the DataTables API, so we can't
+            // depend on nTable existing in future versions.
+            var api = new $.fn.dataTable.Api(meta.settings);
+            meta.settings.nTable = api.table().node();
+        }
         var table = meta.settings.nTable;
         var colName = table.columns[meta.col];
         var field = row[colName];
