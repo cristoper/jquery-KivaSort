@@ -419,7 +419,9 @@
 
             // Get country if available
             // If more than one country for an MFI, use the first one
-            partner.country = partner.countries[0].name || partner.countries[0].iso_code;
+            if (!partner.country) {
+                partner.country = partner.countries[0].name || partner.countries[0].iso_code;
+            }
         });
     }
 
