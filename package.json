@@ -27,5 +27,8 @@
   "bugs": {
     "url": "https://github.com/cristoper/jquery-KivaSort/issues"
   },
-  "main": "kiva_sort.js"
+  "main": "kiva_sort.js",
+  "devDependencies": {
+    "qunitjs": "^1.20.0"
+  }
 }
