@@ -30,7 +30,14 @@
         ajax: fetchData,
         columnDefs: [{
             targets: "_all",
-            render: getData
+
+            /* I am using the columns.data option instead of columns.render because
+             * using columns.render was throwing an error when I tried to invoke
+             * column.data() in one of my apps. The exact same function using
+             * column.render works... TODO: make a simple test case and determine if it
+             * is my bug or DataTables'.
+             */
+            data: getData
         }]
     };
 
@@ -42,28 +49,34 @@
      * @returns {String} - The text (HTML) to display for the requested cell
      * @see http://datatables.net/reference/option/columns.data
      */
-    function getData(data, type, row, meta) {
-        // This is too slow!:
-        //var api = new $.fn.dataTable.Api(meta.settings);
-        //var table = api.table().node()
-
-        /* So instead we must unfortunately rely on the private API of the
-        * settings object: */
+    function getData(row, type, set, meta ) {
+        if (!meta.settings.nTable) {
+            // settings object is private to the DataTables API, so we can't
+            // depend on nTable existing in future versions.
+            var api = new $.fn.dataTable.Api(meta.settings);
+            meta.settings.nTable = api.table().node();
+        }
         var table = meta.settings.nTable;
         var colName = table.columns[meta.col];
         var field = row[colName];
 
-        if (type == "sort" || type == "type") {
-            // For sorting and type detection, return the raw JSON data
+        // Handle all the undefined fields
+        if (field === undefined || field == undefinedValue) {
+            if (type == "sort") {
+                // special value for sorting
+                return undefinedValue;
+            } else {
+                return naText;
+            }
+        }
+
+        if (type !== "display") {
+            // For sorting, filtering, and type detection, return the raw JSON
+            // data
             return field;
         }
 
-        // For display and filtering, format things nicely
-
-        // Catch all the 'undefined' fields
-        if (field === undefined || field == undefinedValue) {
-            return naText;
-        }
+        // For display format things nicely...
 
         // Handle specific columns
         switch (colName) {
@@ -323,8 +336,8 @@
     }
 
     /** Initiate the AJAX call 
-    *  @returns A jquery promise. Calling done() on the promise will return the
-    *  data when it is available*/
+     *  @returns A jquery promise. Calling done() on the promise will return the
+     *  data when it is available*/
     function fetchKivaPartners(pageNum) {
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
@@ -406,7 +419,9 @@
 
             // Get country if available
             // If more than one country for an MFI, use the first one
-            partner.country = partner.countries[0].name || partner.countries[0].iso_code;
+            if (!partner.country) {
+                partner.country = partner.countries[0].name || partner.countries[0].iso_code;
+            }
         });
     }
 
