@@ -4,7 +4,12 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
-## [1.2.0] - 2016-01-26
+## [1.2.1] - 2018-11-01
+## Changed
+- No longer support Bower (use Yarn package manager instead)
+- Update README install instructions
+
+## [1.2.0] - 2016-26-01
 ### Fixed
 - Switch back to using the `columns.data` option (as opposed to `columns.render`) to work around possible DataTables bug
 - Improve the way undefined data is treated by the orthogonal data types. This makes better column sorting possible
@@ -41,7 +46,8 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 - Supports multiple tables in a single HTML document
 - Installable from 
 
-[Unreleased]: https://github.com/cristoper/jquery-KivaSort/compare/v1.2.0...HEAD
+[Unreleased]: https://github.com/cristoper/jquery-KivaSort/compare/v1.2.1...HEAD
+[1.2.1]: https://github.com/cristoper/jquery-KivaSort/compare/v1.2.0...v1.2.1
 [1.2.0]: https://github.com/cristoper/jquery-KivaSort/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/cristoper/jquery-KivaSort/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/cristoper/jquery-KivaSort/compare/v1.0.0...v1.1.0
