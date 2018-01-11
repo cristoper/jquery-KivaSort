@@ -21,7 +21,7 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 - [KivaSort in the Wild](#kivasort-in-the-wild)
 - [Installation](#installation)
   - [Plain File From Git](#plain-file-from-git)
-  - [Bower and npm Packages](#bower-and-npm-packages)
+  - [npm package](#npm-package)
   - [Add KivaSort To Your HTML](#add-kivasort-to-your-html)
 - [Usage](#usage)
   - [Basic Table](#basic-table)
