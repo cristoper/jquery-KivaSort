@@ -39,7 +39,7 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 
 ## KivaSort in the Wild
 
-* [KivaSort.org](http://www.kivasort.org/)
+* [KivaSort.AmericanCynic.net](http://KivaSort.AmericanCynic.net/) - a big table to sort and search Kiva field partners
 
 ## Installation
 
@@ -61,18 +61,18 @@ $ git subtree add -P vendor/ks --squash kivasort master
 $ git subtree pull -P vendor/ks --squash kivasort master
 ```
 
-### Bower and npm Packages
+### npm package
 
-Or, instead of git you can use a package manager. If you use [Bower](http://bower.io/), you can install KivaSort by running:
-
-```sh
-bower install jquery-kivasort
-```
-
-Likewise if you use [npm](https://www.npmjs.com/) to manage your dependencies, you can install jquery-kivasort by running:
+Or, instead of git you can use [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/) to install jquery-kivasort:
 
 ```sh
 npm install jquery-kivasort
+```
+
+or
+
+```sh
+yarn install jquery-kivasort
 ```
 
 ### Add KivaSort To Your HTML
@@ -87,12 +87,12 @@ So your HTML page should have lines similar to these:
 ```html
 <head>
   <!-- DataTables CSS -->
-  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.10/css/jquery.dataTables.css">
-
-  <!-- JQuery JavaScript -->
-  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.10/js/jquery.dataTables.js"></script>
+  <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
 
   <!-- DataTables JavaScript -->
+  <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+  <!-- JQuery JavaScript -->
   <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 
   <!-- KivaSort JavaScript (locally hosted) -->
@@ -226,7 +226,7 @@ $('#KivaSort').makeKivaTable({
 });
 ```
 
-For a demonstration, look at the "Using Cached Data" example (on the [examples page](http://cristoper.github.io/jquery-KivaSort/)) or the table on [KivaSort.org](http://kivasort.org/).
+For a demonstration, look at the "Using Cached Data" example (on the [examples page](http://cristoper.github.io/jquery-KivaSort/)) or the table on [KivaSort.AmericanCynic.net](http://kivasort.americancynic.net/).
 
 ### Reload a KivaSort Table
 
