@@ -75,6 +75,12 @@ or
 yarn install jquery-kivasort
 ```
 
+If you only intend to use `kiva_sort.js` (and not the command line utility `fetchkivajson.js`), then you don't need the optional dependencies:
+
+```sh
+yarn install --ignore-optional
+```
+
 ### Add KivaSort To Your HTML
 
 KivaSort has two dependencies which must also be referenced from your HTML document:
