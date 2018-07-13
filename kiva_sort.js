@@ -14,8 +14,8 @@
 ;(function ($, document, window, exports) {
     "use strict";
 
-    var partnersURL = 'http://www.kiva.org/partners/';    
-    var apiURL = 'http://api.kivaws.org/v1/partners.json';
+    var partnersURL = 'https://www.kiva.org/partners/';    
+    var apiURL = 'https://api.kivaws.org/v1/partners.json';
     var undefinedValue = 999;
     var naText = '-'; // text to display when a value is N/A
     var numericColumns = ['average_loan_size_percent_per_capita_income', 'currency_exchange_loss_rate', 'default_rate', 'delinquency_rate', 'id', 'loans_at_risk_rate', 'loans_posted', 'portfolio_yield', 'profitability', 'total_amount_raised']; 
