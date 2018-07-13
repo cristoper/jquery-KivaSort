@@ -14,7 +14,7 @@
 ;(function ($, document, window, exports) {
     "use strict";
 
-    var partnersURL = 'https://www.kiva.org/partners/';    
+    var partnersURL = 'https://www.kiva.org/about/where-kiva-works/partners/';    
     var apiURL = 'https://api.kivaws.org/v1/partners.json';
     var undefinedValue = 999;
     var naText = '-'; // text to display when a value is N/A
