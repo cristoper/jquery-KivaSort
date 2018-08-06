@@ -378,11 +378,13 @@
      * @param {JSON} data - The data returned from the server
      * */
     function gotKivaPage(data) {
-        $.extend(KivaSort.fetchedJSON.data, data);
+        KivaSort.fetchedJSON.data.paging = data.paging
+        KivaSort.fetchedJSON.data.partners = KivaSort.fetchedJSON.data.partners || []
+        $.merge(KivaSort.fetchedJSON.data.partners, data.partners);
         var curPage = data.paging.page;
         if (data.paging.pages > curPage) {
             // There are more pages of field partners JSON to retrieve
-            KivaSort.fetchKivaPartners(curPage + 1);
+            fetchKivaPartners(curPage + 1);
         } else if (KivaSort.fetchedJSON.data) {
             // We got all of the pages
             preProcessJSON(KivaSort.fetchedJSON.data);
