@@ -4,6 +4,10 @@ This project tries to adhere to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.3.0] - 2018-08-06
+## Fixed
+- Correctly handle paging (when Kiva API returns more than one page of results, which it now does)
+
 ## [1.2.1] - 2018-11-01
 ## Changed
 - No longer support Bower (use Yarn package manager instead)
