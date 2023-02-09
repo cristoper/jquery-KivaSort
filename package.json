@@ -7,7 +7,7 @@
   },
   "optionalDependencies": {
     "jquery": "^3.5.0",
-    "jsdom": "^7.2.2",
+    "jsdom": "^16.5.0",
     "uglify-js": "^2.6.1",
     "xmlhttprequest": "^1.8.0"
   },
