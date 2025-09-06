@@ -14,11 +14,6 @@ var fs = require("fs");
 // Setup a DOM environment to make jQuery happy
 const { JSDOM, ResourceLoader } = require('jsdom');
 
-const resourceLoader = new ResourceLoader({
-    proxy: "http://127.0.0.1:8888",
-    strictSSL: false,
-    rejectUnauthorized: false,
-});
 const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>',
     {
         url: "https://api.kivaws.org",
