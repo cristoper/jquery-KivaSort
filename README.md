@@ -45,7 +45,7 @@ DataTables does all of the heavy lifting of making the table dynamic. Any of the
 
 ### Plain File From Git
 
-The KivaSort plugin is contained in a single JavaScript file, [kiva_sort.js](https://raw.githubusercontent.com/cristoper/jquery-KivaSort/master/js/kiva_sort.js). You can find the latest stable version in the master branch of [its github repository](https://github.com/cristoper/jquery-KivaSort). Simply download it then include it in your HTML.
+The KivaSort plugin is contained in a single JavaScript file, [kiva_sort.js](https://raw.githubusercontent.com/cristoper/jquery-KivaSort/refs/heads/master/kiva_sort.js). You can find the latest stable version in the master branch of [its github repository](https://github.com/cristoper/jquery-KivaSort). Simply download it then include it in your HTML.
 
 Or a good way to include KivaSort into your project so that it is easy to check for updates is to use [git subtree](https://git-scm.com/book/en/v1/Git-Tools-Subtree-Merging):
 
