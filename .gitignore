@@ -1,6 +1,7 @@
 # Include your project-specific ignores in this file
 .aider.*
 node_modules/
+/partners.json
 *.swp
 /.yarn/
 /yarn/
