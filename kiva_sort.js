@@ -341,7 +341,17 @@
     function fetchKivaPartners(pageNum) {
         if (!pageNum || pageNum < 1) { pageNum = 1; }
 
-        $.getJSON(apiURL, {'page': pageNum, 'app_id': KivaSort.app_id})
+        $.ajax({
+            url: apiURL,
+            headers: {
+                'User-Agent': navigator.userAgent || "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+                "Accept": "*/*",
+            },
+            data: {
+                'page': pageNum,
+                'app_id': KivaSort.app_id
+            },
+        })
         .done(gotKivaPage)
         .fail(jsonFailed);
 
