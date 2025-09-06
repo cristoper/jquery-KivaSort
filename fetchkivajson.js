@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /* This script fetches the list of kiva.org field partners from the kiva API
  * and outputs them, in JSON format, to stdout.
  *
@@ -11,18 +10,25 @@
  */
 
 var fs = require("fs");
-var XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
 
 // Setup a DOM environment to make jQuery happy
-document = require('jsdom').jsdom(undefined);
-window = document.defaultView;
-jQuery = require('jquery');
+const { JSDOM, ResourceLoader } = require('jsdom');
 
-// configure jQuery ajax
-jQuery.support.cors = true;
-jQuery.ajaxSettings.xhr = function() {
-    return new XMLHttpRequest();
-};
+const resourceLoader = new ResourceLoader({
+    proxy: "http://127.0.0.1:8888",
+    strictSSL: false,
+    rejectUnauthorized: false,
+});
+const dom = new JSDOM('<!DOCTYPE html><html><body></body></html>',
+    {
+        url: "https://api.kivaws.org",
+    });
+
+global.document = dom.window.document;
+global.window = dom.window;
+global.navigator = dom.window.navigator;
+
+jQuery = require('jquery');
 
 /** dummy object so we don't have to require datatables
  * from node.js
@@ -34,6 +40,5 @@ var plugin = require('./kiva_sort.js');
 
 // Fetch data and send it to stdout
 plugin.fetchKivaPartners().done(function(data) {
-        console.log({partners: data});
+        console.log(JSON.stringify({partners: data}, null, 2));
         });
-
